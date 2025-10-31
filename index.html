@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Year 8 Streaming Predictor — Brunei</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>Year 8 Streaming Predictor</h1>
+      <p class="subtitle">Estimate a student's likely class placement using 7 subject scores.<br><span class="muted">Demo model (Random Forest) — focus on core subjects: Maths, English, Science, Malay.</span></p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Enter Scores (0–100)</h2>
+      <form id="scoreForm">
+        <div class="grid">
+          <label>Mathematics
+            <input type="number" id="maths" min="0" max="100" step="1" required placeholder="e.g., 82">
+          </label>
+          <label>English
+            <input type="number" id="english" min="0" max="100" step="1" required placeholder="e.g., 74">
+          </label>
+          <label>Science
+            <input type="number" id="science" min="0" max="100" step="1" required placeholder="e.g., 78">
+          </label>
+          <label>Malay
+            <input type="number" id="malay" min="0" max="100" step="1" required placeholder="e.g., 70">
+          </label>
+          <label>Subject 5
+            <input type="number" id="sub5" min="0" max="100" step="1" required placeholder="e.g., 66">
+          </label>
+          <label>Subject 6
+            <input type="number" id="sub6" min="0" max="100" step="1" required placeholder="e.g., 60">
+          </label>
+          <label>Subject 7
+            <input type="number" id="sub7" min="0" max="100" step="1" required placeholder="e.g., 72">
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn-primary">Predict Stream</button>
+          <button type="button" id="btnSample" class="btn-outline">Fill Sample</button>
+          <button type="reset" class="btn-ghost">Clear</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="result card" id="resultCard" hidden>
+      <h2>Predicted Stream</h2>
+      <div id="predLabel" class="badge"></div>
+      <div id="probBars" class="probs"></div>
+      <details class="explain">
+        <summary>Why this result?</summary>
+        <div id="explainPanel"></div>
+      </details>
+    </section>
+
+    <section class="card info">
+      <h2>About this demo</h2>
+      <ul>
+        <li><strong>Model:</strong> Browser-side Random Forest (5 trees, hand-initialized for demo).</li>
+        <li><strong>Inputs:</strong> 7 subjects (core: Maths, English, Science, Malay) + 3 others.</li>
+        <li><strong>Outputs:</strong> Express, Science, General, Applied, Special Applied.</li>
+        <li><strong>Privacy:</strong> Everything runs in your browser; no data leaves the page.</li>
+      </ul>
+      <p class="muted">Note: Replace the included <code>model.json</code> with your trained trees to use real school data.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Year 8 Streaming Predictor • Built for Brunei schools • Demo only</p>
+    </div>
+  </footer>
+
+  <script src="rf.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

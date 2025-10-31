@@ -1,0 +1,342 @@
+{
+  "classes": [
+    "Express",
+    "Science",
+    "General",
+    "Applied",
+    "Special Applied"
+  ],
+  "trees": [
+    {
+      "feature": 0,
+      "threshold": 84.5,
+      "left": {
+        "feature": 2,
+        "threshold": 79.5,
+        "left": {
+          "feature": 1,
+          "threshold": 64.5,
+          "left": {
+            "feature": 3,
+            "threshold": 49.5,
+            "left": {
+              "value": [
+                0.01,
+                0.01,
+                0.01,
+                0.01,
+                0.96
+              ]
+            },
+            "right": {
+              "value": [
+                0.01,
+                0.01,
+                0.01,
+                0.96,
+                0.01
+              ]
+            }
+          },
+          "right": {
+            "value": [
+              0.01,
+              0.01,
+              0.96,
+              0.01,
+              0.01
+            ]
+          }
+        },
+        "right": {
+          "value": [
+            0.01,
+            0.96,
+            0.01,
+            0.01,
+            0.01
+          ]
+        }
+      },
+      "right": {
+        "feature": 2,
+        "threshold": 84.5,
+        "left": {
+          "value": [
+            0.96,
+            0.01,
+            0.01,
+            0.01,
+            0.01
+          ]
+        },
+        "right": {
+          "value": [
+            0.96,
+            0.01,
+            0.01,
+            0.01,
+            0.01
+          ]
+        }
+      }
+    },
+    {
+      "feature": 0,
+      "threshold": 87.5,
+      "left": {
+        "feature": 2,
+        "threshold": 84.5,
+        "left": {
+          "feature": 1,
+          "threshold": 69.5,
+          "left": {
+            "value": [
+              0.01,
+              0.01,
+              0.01,
+              0.96,
+              0.01
+            ]
+          },
+          "right": {
+            "value": [
+              0.01,
+              0.01,
+              0.96,
+              0.01,
+              0.01
+            ]
+          }
+        },
+        "right": {
+          "value": [
+            0.01,
+            0.96,
+            0.01,
+            0.01,
+            0.01
+          ]
+        }
+      },
+      "right": {
+        "feature": 1,
+        "threshold": 79.5,
+        "left": {
+          "value": [
+            0.01,
+            0.96,
+            0.01,
+            0.01,
+            0.01
+          ]
+        },
+        "right": {
+          "value": [
+            0.96,
+            0.01,
+            0.01,
+            0.01,
+            0.01
+          ]
+        }
+      }
+    },
+    {
+      "feature": 2,
+      "threshold": 89.5,
+      "left": {
+        "feature": 0,
+        "threshold": 74.5,
+        "left": {
+          "feature": 3,
+          "threshold": 59.5,
+          "left": {
+            "value": [
+              0.01,
+              0.01,
+              0.01,
+              0.01,
+              0.96
+            ]
+          },
+          "right": {
+            "value": [
+              0.01,
+              0.01,
+              0.01,
+              0.96,
+              0.01
+            ]
+          }
+        },
+        "right": {
+          "value": [
+            0.01,
+            0.01,
+            0.96,
+            0.01,
+            0.01
+          ]
+        }
+      },
+      "right": {
+        "feature": 0,
+        "threshold": 84.5,
+        "left": {
+          "value": [
+            0.01,
+            0.96,
+            0.01,
+            0.01,
+            0.01
+          ]
+        },
+        "right": {
+          "value": [
+            0.96,
+            0.01,
+            0.01,
+            0.01,
+            0.01
+          ]
+        }
+      }
+    },
+    {
+      "feature": 3,
+      "threshold": 84.5,
+      "left": {
+        "feature": 1,
+        "threshold": 69.5,
+        "left": {
+          "feature": 0,
+          "threshold": 59.5,
+          "left": {
+            "value": [
+              0.01,
+              0.01,
+              0.01,
+              0.01,
+              0.96
+            ]
+          },
+          "right": {
+            "value": [
+              0.01,
+              0.01,
+              0.01,
+              0.96,
+              0.01
+            ]
+          }
+        },
+        "right": {
+          "value": [
+            0.01,
+            0.01,
+            0.96,
+            0.01,
+            0.01
+          ]
+        }
+      },
+      "right": {
+        "feature": 0,
+        "threshold": 84.5,
+        "left": {
+          "value": [
+            0.01,
+            0.01,
+            0.96,
+            0.01,
+            0.01
+          ]
+        },
+        "right": {
+          "value": [
+            0.96,
+            0.01,
+            0.01,
+            0.01,
+            0.01
+          ]
+        }
+      }
+    },
+    {
+      "feature": 0,
+      "threshold": 64.5,
+      "left": {
+        "feature": 2,
+        "threshold": 64.5,
+        "left": {
+          "value": [
+            0.01,
+            0.01,
+            0.01,
+            0.01,
+            0.96
+          ]
+        },
+        "right": {
+          "value": [
+            0.01,
+            0.01,
+            0.01,
+            0.96,
+            0.01
+          ]
+        }
+      },
+      "right": {
+        "feature": 1,
+        "threshold": 64.5,
+        "left": {
+          "feature": 5,
+          "threshold": 49.5,
+          "left": {
+            "value": [
+              0.01,
+              0.01,
+              0.01,
+              0.96,
+              0.01
+            ]
+          },
+          "right": {
+            "value": [
+              0.01,
+              0.01,
+              0.96,
+              0.01,
+              0.01
+            ]
+          }
+        },
+        "right": {
+          "feature": 4,
+          "threshold": 74.5,
+          "left": {
+            "value": [
+              0.01,
+              0.01,
+              0.96,
+              0.01,
+              0.01
+            ]
+          },
+          "right": {
+            "value": [
+              0.01,
+              0.96,
+              0.01,
+              0.01,
+              0.01
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
