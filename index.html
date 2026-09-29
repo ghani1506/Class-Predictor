@@ -12,7 +12,6 @@ const PROGRAMMES = [
     duration: "4 Years",
     stream: "Year 9 ADV",
     colour: "#f78b8f",
-
     ranges: {
       bm: [70, 100],
       mib: [70, 100],
@@ -31,7 +30,6 @@ const PROGRAMMES = [
     duration: "5 Years",
     stream: "Year 9 O Level - Science",
     colour: "#45cf59",
-
     ranges: {
       bm: [60, 100],
       mib: [60, 100],
@@ -50,7 +48,6 @@ const PROGRAMMES = [
     duration: "5 Years",
     stream: "Year 9 O Level - Art",
     colour: "#bff3bf",
-
     ranges: {
       bm: [40, 59.999],
       mib: [40, 59.999],
@@ -69,7 +66,6 @@ const PROGRAMMES = [
     duration: "5 Years",
     stream: "Year 9 IGCSE",
     colour: "#d8b5f4",
-
     ranges: {
       bm: [40, 59.999],
       mib: [40, 59.999],
@@ -88,7 +84,6 @@ const PROGRAMMES = [
     duration: "5 Years",
     stream: "Year 9 SAP",
     colour: "#fff98c",
-
     ranges: {
       bm: [0, 39.999],
       mib: [0, 39.999],
@@ -104,20 +99,15 @@ const PROGRAMMES = [
 
 /* ============================================================
    SUBJECT WEIGHTS
-
-   English, Mathematics and Science are given
-   higher weighting.
    ============================================================ */
 
 const WEIGHTS = {
   bm: 1,
   mib: 1,
   irk: 1,
-
   english: 2,
   maths: 2,
   science: 2,
-
   nonCore: 1
 };
 
@@ -127,33 +117,21 @@ const WEIGHTS = {
    ============================================================ */
 
 function valNum(id) {
-
-  const el =
-    document.getElementById(id);
+  const el = document.getElementById(id);
 
   if (!el) {
-    throw new Error(
-      `Input "${id}" was not found.`
-    );
+    throw new Error(`Input "${id}" was not found.`);
   }
 
-  const raw =
-    el.value.trim();
+  const raw = el.value.trim();
 
   if (raw === "") {
-    throw new Error(
-      `Please enter a mark for ${id}.`
-    );
+    throw new Error(`Please enter a mark for ${id}.`);
   }
 
-  const value =
-    Number(raw);
+  const value = Number(raw);
 
-  if (
-    Number.isNaN(value) ||
-    value < 0 ||
-    value > 100
-  ) {
+  if (Number.isNaN(value) || value < 0 || value > 100) {
     throw new Error(
       `Please enter a valid mark between 0 and 100 for ${id}.`
     );
@@ -165,37 +143,25 @@ function valNum(id) {
 
 /* ============================================================
    OPTIONAL INPUT
-
-   Used for Arabic and Drama.
-   Blank input becomes null.
+   Arabic and Drama may be blank
    ============================================================ */
 
 function valOptionalNum(id) {
-
-  const el =
-    document.getElementById(id);
+  const el = document.getElementById(id);
 
   if (!el) {
-    throw new Error(
-      `Input "${id}" was not found.`
-    );
+    throw new Error(`Input "${id}" was not found.`);
   }
 
-  const raw =
-    el.value.trim();
+  const raw = el.value.trim();
 
   if (raw === "") {
     return null;
   }
 
-  const value =
-    Number(raw);
+  const value = Number(raw);
 
-  if (
-    Number.isNaN(value) ||
-    value < 0 ||
-    value > 100
-  ) {
+  if (Number.isNaN(value) || value < 0 || value > 100) {
     throw new Error(
       `Please enter a valid mark between 0 and 100 for ${id}.`
     );
@@ -210,41 +176,24 @@ function valOptionalNum(id) {
    ============================================================ */
 
 function inRange(value, range) {
-
-  return (
-    value >= range[0] &&
-    value <= range[1]
-  );
-
+  return value >= range[0] && value <= range[1];
 }
 
 
 /* ============================================================
-   DISTANCE FROM PROGRAMME RANGE
-
-   Used when two programmes have the same score.
+   DISTANCE FROM RANGE
    ============================================================ */
 
 function distanceFromRange(value, range) {
-
-  if (
-    inRange(value, range)
-  ) {
+  if (inRange(value, range)) {
     return 0;
   }
 
-  if (
-    value < range[0]
-  ) {
-    return (
-      range[0] - value
-    );
+  if (value < range[0]) {
+    return range[0] - value;
   }
 
-  return (
-    value - range[1]
-  );
-
+  return value - range[1];
 }
 
 
@@ -253,40 +202,18 @@ function distanceFromRange(value, range) {
    ============================================================ */
 
 function rangeText(range) {
+  const min = range[0];
+  const max = range[1];
 
-  const min =
-    range[0];
-
-  const max =
-    range[1];
-
-
-  if (
-    max >= 100
-  ) {
-
-    return (
-      `${min}% & Above`
-    );
-
+  if (max >= 100) {
+    return `${min}% & Above`;
   }
 
-
-  if (
-    min === 0
-  ) {
-
-    return (
-      `Less than ${Math.ceil(max + 0.001)}%`
-    );
-
+  if (min === 0) {
+    return `Less than ${Math.ceil(max + 0.001)}%`;
   }
 
-
-  return (
-    `${Math.floor(min)}% - ${Math.floor(max)}%`
-  );
-
+  return `${Math.floor(min)}% - ${Math.floor(max)}%`;
 }
 
 
@@ -298,73 +225,50 @@ function rangeText(range) {
    Arabic         = optional
    Drama          = optional
 
-   Valid examples:
-
-   SS + Arabic + BAT
-   SS + Drama + BAT
-   SS + Arabic + Drama + BAT
-
-   If all 4 are entered, the best 3 are used.
+   Either Arabic OR Drama may be blank.
+   If all four are entered, the best 3 are used.
    ============================================================ */
 
 function getBestThreeNonCore(scores) {
-
   const subjects = [
-
     {
       key: "ss",
       name: "Social Studies",
       mark: scores.ss
     },
-
     {
       key: "arabic",
       name: "Arabic",
       mark: scores.arabic
     },
-
     {
       key: "drama",
       name: "Drama",
       mark: scores.drama
     },
-
     {
       key: "bat",
       name: "BAT",
       mark: scores.bat
     }
-
   ];
 
+  const availableSubjects = subjects.filter(
+    subject =>
+      subject.mark !== null &&
+      subject.mark !== undefined &&
+      !Number.isNaN(subject.mark)
+  );
 
-  const availableSubjects =
-    subjects.filter(
-      subject =>
-        subject.mark !== null &&
-        subject.mark !== undefined &&
-        !Number.isNaN(subject.mark)
-    );
-
-
-  if (
-    availableSubjects.length < 3
-  ) {
-
+  if (availableSubjects.length < 3) {
     throw new Error(
       "At least 3 non-core subject marks are required. Either Arabic or Drama may be left blank."
     );
-
   }
 
-
   return availableSubjects
-    .sort(
-      (a, b) =>
-        b.mark - a.mark
-    )
+    .sort((a, b) => b.mark - a.mark)
     .slice(0, 3);
-
 }
 
 
@@ -372,17 +276,10 @@ function getBestThreeNonCore(scores) {
    SCORE ONE PROGRAMME
    ============================================================ */
 
-function scoreProgramme(
-  programme,
-  scores
-) {
-
-  const bestThree =
-    getBestThreeNonCore(scores);
-
+function scoreProgramme(programme, scores) {
+  const bestThree = getBestThreeNonCore(scores);
 
   const subjects = [
-
     {
       key: "bm",
       name: "Bahasa Melayu",
@@ -430,271 +327,122 @@ function scoreProgramme(
       range: programme.ranges.science,
       weight: WEIGHTS.science
     }
-
   ];
 
-
   let score = 0;
-
   let distance = 0;
 
+  const subjectChecks = subjects.map(subject => {
+    const passed = inRange(subject.mark, subject.range);
 
-  /* ========================================================
-     CORE / COMPULSORY SUBJECTS
-     ======================================================== */
+    if (passed) {
+      score += subject.weight;
+    }
 
-  const subjectChecks =
-    subjects.map(
-      subject => {
+    distance +=
+      distanceFromRange(subject.mark, subject.range) *
+      subject.weight;
 
-        const passed =
-          inRange(
-            subject.mark,
-            subject.range
-          );
+    return {
+      ...subject,
+      passed
+    };
+  });
 
-
-        if (
-          passed
-        ) {
-
-          score +=
-            subject.weight;
-
-        }
-
-
-        distance +=
-          distanceFromRange(
-            subject.mark,
-            subject.range
-          ) *
-          subject.weight;
-
-
-        return {
-
-          ...subject,
-
-          passed
-
-        };
-
-      }
+  const nonCoreChecks = bestThree.map(subject => {
+    const passed = inRange(
+      subject.mark,
+      programme.ranges.nonCore
     );
 
+    if (passed) {
+      score += WEIGHTS.nonCore;
+    }
 
-  /* ========================================================
-     NON-CORE SUBJECTS
-     ======================================================== */
-
-  const nonCoreChecks =
-    bestThree.map(
-      subject => {
-
-        const passed =
-          inRange(
-            subject.mark,
-            programme.ranges.nonCore
-          );
-
-
-        if (
-          passed
-        ) {
-
-          score +=
-            WEIGHTS.nonCore;
-
-        }
-
-
-        distance +=
-          distanceFromRange(
-            subject.mark,
-            programme.ranges.nonCore
-          );
-
-
-        return {
-
-          ...subject,
-
-          range:
-            programme.ranges.nonCore,
-
-          weight:
-            WEIGHTS.nonCore,
-
-          passed
-
-        };
-
-      }
+    distance += distanceFromRange(
+      subject.mark,
+      programme.ranges.nonCore
     );
 
+    return {
+      ...subject,
+      range: programme.ranges.nonCore,
+      weight: WEIGHTS.nonCore,
+      passed
+    };
+  });
 
-  /* ========================================================
-     TOTAL SCORE
-
-     BM       = 1
-     MIB      = 1
-     IRK      = 1
-     English  = 2
-     Maths    = 2
-     Science  = 2
-     Non-core = 3
-
-     Maximum = 12
-     ======================================================== */
-
-  const maxScore =
-    12;
-
+  const maxScore = 12;
 
   const matchPercent =
     Math.round(
-      (
-        score /
-        maxScore
-      ) *
-      100
+      (score / maxScore) * 100
     );
 
-
   return {
-
     programme,
-
     subjectChecks,
-
-    bestThree:
-      nonCoreChecks,
-
+    bestThree: nonCoreChecks,
     score,
-
     maxScore,
-
     matchPercent,
-
     distance
-
   };
-
 }
 
 
 /* ============================================================
    EVALUATE STREAMING
-
-   Highest matching score wins.
    ============================================================ */
 
 function evaluateStreaming(scores) {
-
-  const results =
-    PROGRAMMES.map(
-      programme =>
-        scoreProgramme(
-          programme,
-          scores
-        )
-    );
-
-
-  /* ========================================================
-     SORT RULES
-
-     1. Highest weighted score
-     2. Smallest distance from programme criteria
-     3. Higher programme if still tied
-     ======================================================== */
-
-  results.sort(
-    (a, b) => {
-
-
-      if (
-        b.score !==
-        a.score
-      ) {
-
-        return (
-          b.score -
-          a.score
-        );
-
-      }
-
-
-      if (
-        a.distance !==
-        b.distance
-      ) {
-
-        return (
-          a.distance -
-          b.distance
-        );
-
-      }
-
-
-      return (
-
-        Number(
-          a.programme.code.substring(1)
-        )
-
-        -
-
-        Number(
-          b.programme.code.substring(1)
-        )
-
-      );
-
-    }
+  const results = PROGRAMMES.map(
+    programme =>
+      scoreProgramme(
+        programme,
+        scores
+      )
   );
 
+  /*
+     Ranking:
+     1. Highest weighted score
+     2. Lowest distance from programme band
+     3. Higher programme on exact tie
+  */
 
-  const best =
-    results[0];
+  results.sort((a, b) => {
+    if (b.score !== a.score) {
+      return b.score - a.score;
+    }
 
+    if (a.distance !== b.distance) {
+      return a.distance - b.distance;
+    }
 
-  const second =
-    results[1];
+    return (
+      Number(a.programme.code.substring(1)) -
+      Number(b.programme.code.substring(1))
+    );
+  });
 
-
-  /* ========================================================
-     BORDERLINE RULE
-
-     If the second-best programme is only
-     1 weighted point behind, flag it.
-     ======================================================== */
+  const best = results[0];
+  const second = results[1];
 
   best.borderline =
     Boolean(
       second &&
-      (
-        best.score -
-        second.score
-      ) <= 1
+      (best.score - second.score) <= 1
     );
-
 
   best.secondBest =
     best.borderline
       ? second
       : null;
 
-
-  best.allResults =
-    results;
-
+  best.allResults = results;
 
   return best;
-
 }
 
 
@@ -703,49 +451,31 @@ function evaluateStreaming(scores) {
    ============================================================ */
 
 function subjectRow(subject) {
-
   return `
-
-    <div
-      class="criteria-row
-      ${subject.passed ? "pass" : "fail"}"
-    >
+    <div class="criteria-row ${subject.passed ? "pass" : "fail"}">
 
       <div class="criteria-subject">
-
         ${subject.name}
-
       </div>
-
 
       <div class="criteria-mark">
-
         ${subject.mark.toFixed(1)}%
-
       </div>
-
 
       <div class="criteria-required">
-
         ${rangeText(subject.range)}
-
       </div>
 
-
       <div class="criteria-status">
-
         ${
           subject.passed
             ? `✓ Match (${subject.weight} pt${subject.weight > 1 ? "s" : ""})`
             : "Outside Band"
         }
-
       </div>
 
     </div>
-
   `;
-
 }
 
 
@@ -754,124 +484,65 @@ function subjectRow(subject) {
    ============================================================ */
 
 function programmeScoreTable(result) {
-
   const rows =
     result.allResults
-      .map(
-        item => {
+      .map(item => {
+        const isBest =
+          item.programme.code ===
+          result.programme.code;
 
-          const isBest =
-            (
-              item.programme.code ===
-              result.programme.code
-            );
+        return `
+          <tr class="${isBest ? "best-programme-row" : ""}">
 
+            <td>
+              <strong>${item.programme.name}</strong>
+            </td>
 
-          return `
+            <td>
+              ${item.programme.title}
+            </td>
 
-            <tr
-              class="${
-                isBest
-                  ? "best-programme-row"
-                  : ""
-              }"
-            >
+            <td>
+              <strong>
+                ${item.score}/${item.maxScore}
+              </strong>
+            </td>
 
-              <td>
+            <td>
+              ${item.matchPercent}%
+            </td>
 
-                <strong>
-                  ${item.programme.name}
-                </strong>
-
-              </td>
-
-
-              <td>
-
-                ${item.programme.title}
-
-              </td>
-
-
-              <td>
-
-                <strong>
-
-                  ${item.score}/${item.maxScore}
-
-                </strong>
-
-              </td>
-
-
-              <td>
-
-                ${item.matchPercent}%
-
-              </td>
-
-            </tr>
-
-          `;
-
-        }
-      )
+          </tr>
+        `;
+      })
       .join("");
 
-
   return `
-
     <h3>
       Programme Match Comparison
     </h3>
 
+    <div class="criteria-table-wrapper">
 
-    <div
-      class="criteria-table-wrapper"
-    >
-
-      <table
-        class="streaming-table match-table"
-      >
+      <table class="streaming-table match-table">
 
         <thead>
-
           <tr>
-
-            <th>
-              Programme
-            </th>
-
-            <th>
-              Pathway
-            </th>
-
-            <th>
-              Score
-            </th>
-
-            <th>
-              Match
-            </th>
-
+            <th>Programme</th>
+            <th>Pathway</th>
+            <th>Score</th>
+            <th>Match</th>
           </tr>
-
         </thead>
 
-
         <tbody>
-
           ${rows}
-
         </tbody>
-
 
       </table>
 
     </div>
-
   `;
-
 }
 
 
@@ -880,52 +551,30 @@ function programmeScoreTable(result) {
    ============================================================ */
 
 function explanation(result) {
+  const programme = result.programme;
 
-  const programme =
-    result.programme;
-
-
-  let borderlineMessage =
-    "";
-
+  let borderlineMessage = "";
 
   if (
     result.borderline &&
     result.secondBest
   ) {
-
     borderlineMessage = `
-
-      <div
-        class="decision-message warning"
-      >
+      <div class="decision-message warning">
 
         <h3>
           Borderline Profile
         </h3>
 
-
         <p>
-
           The student's strongest match is
-
-          <strong>
-            ${programme.name}
-          </strong>,
-
+          <strong>${programme.name}</strong>,
           but the student's profile is also close to
-
-          <strong>
-            ${result.secondBest.programme.name}
-          </strong>.
-
+          <strong>${result.secondBest.programme.name}</strong>.
         </p>
 
-
         <p>
-
           ${programme.name}
-
           <strong>
             ${result.score}/${result.maxScore}
           </strong>
@@ -933,44 +582,28 @@ function explanation(result) {
           &nbsp; • &nbsp;
 
           ${result.secondBest.programme.name}
-
           <strong>
             ${result.secondBest.score}/${result.secondBest.maxScore}
           </strong>
-
         </p>
 
-
         <p>
-
           The recommended programme remains
-
-          <strong>
-            ${programme.name}
-          </strong>,
-
+          <strong>${programme.name}</strong>,
           but teacher or school review may be useful
           before the final placement.
-
         </p>
 
       </div>
-
     `;
-
   }
 
-
   return `
-
-    <div
-      class="prediction-summary"
-    >
+    <div class="prediction-summary">
 
       <h3>
         Recommended Streaming
       </h3>
-
 
       <div
         class="stream-badge"
@@ -979,101 +612,63 @@ function explanation(result) {
           color:#111;
         "
       >
-
         ${programme.name}
-
       </div>
 
-
       <h2>
-
         ${programme.stream}
-
       </h2>
 
-
       <p>
-
         <strong>
-
           ${programme.title}
-
         </strong>
-
       </p>
 
-
       <p>
-
         ${programme.duration}
-
       </p>
 
-
       <p>
-
         Programme Match:
-
         <strong>
-
           ${result.matchPercent}%
-
         </strong>
-
-        (${result.score}/${result.maxScore}
-        weighted points)
-
+        (${result.score}/${result.maxScore} weighted points)
       </p>
 
     </div>
 
-
     ${borderlineMessage}
-
 
     <h3>
       Subject Match
     </h3>
 
-
-    <div
-      class="criteria-group"
-    >
-
+    <div class="criteria-group">
       ${
         result.subjectChecks
           .map(subjectRow)
           .join("")
       }
-
     </div>
-
 
     <h3>
       Best 3 Available Non-Core Subjects
     </h3>
 
-
-    <div
-      class="criteria-group"
-    >
-
+    <div class="criteria-group">
       ${
         result.bestThree
           .map(subjectRow)
           .join("")
       }
-
     </div>
-
 
     ${programmeScoreTable(result)}
 
-
     ${pathwayDisplay(programme)}
-
   `;
-
 }
 
 
@@ -1082,36 +677,23 @@ function explanation(result) {
    ============================================================ */
 
 function pathwayDisplay(programme) {
-
-  switch (
-    programme.code
-  ) {
-
+  switch (programme.code) {
 
     case "P1":
-
       return `
-
-        <div
-          class="decision-message success"
-        >
+        <div class="decision-message success">
 
           <h3>
             General Education Science
           </h3>
 
-
-          <div
-            class="pathway-box"
-          >
+          <div class="pathway-box">
 
             <span>
               YEAR 9 ADV
             </span>
 
-            <span
-              class="arrow"
-            >
+            <span class="arrow">
               →
             </span>
 
@@ -1121,58 +703,39 @@ function pathwayDisplay(programme) {
 
           </div>
 
-
           <p>
-
             Express pathway — 4 Years
-
           </p>
 
         </div>
-
       `;
 
 
     case "P2":
-
       return `
-
-        <div
-          class="decision-message success"
-        >
+        <div class="decision-message success">
 
           <h3>
             General Education Science
           </h3>
 
-
-          <div
-            class="pathway-box"
-          >
+          <div class="pathway-box">
 
             <span>
               YEAR 9 O LEVEL
             </span>
 
-
-            <span
-              class="arrow"
-            >
+            <span class="arrow">
               →
             </span>
-
 
             <span>
               YEAR 10 O LEVEL
             </span>
 
-
-            <span
-              class="arrow"
-            >
+            <span class="arrow">
               →
             </span>
-
 
             <span>
               YEAR 11 O LEVEL
@@ -1181,50 +744,34 @@ function pathwayDisplay(programme) {
           </div>
 
         </div>
-
       `;
 
 
     case "P3":
-
       return `
-
-        <div
-          class="decision-message success"
-        >
+        <div class="decision-message success">
 
           <h3>
             General Education Art
           </h3>
 
-
-          <div
-            class="pathway-box"
-          >
+          <div class="pathway-box">
 
             <span>
               YEAR 9 O LEVEL
             </span>
 
-
-            <span
-              class="arrow"
-            >
+            <span class="arrow">
               →
             </span>
-
 
             <span>
               YEAR 10 O LEVEL
             </span>
 
-
-            <span
-              class="arrow"
-            >
+            <span class="arrow">
               →
             </span>
-
 
             <span>
               YEAR 11 O LEVEL
@@ -1233,50 +780,34 @@ function pathwayDisplay(programme) {
           </div>
 
         </div>
-
       `;
 
 
     case "P4":
-
       return `
-
-        <div
-          class="decision-message warning"
-        >
+        <div class="decision-message warning">
 
           <h3>
             Applied Programme
           </h3>
 
-
-          <div
-            class="pathway-box"
-          >
+          <div class="pathway-box">
 
             <span>
               YEAR 9 IGCSE
             </span>
 
-
-            <span
-              class="arrow"
-            >
+            <span class="arrow">
               →
             </span>
-
 
             <span>
               YEAR 10 IGCSE
             </span>
 
-
-            <span
-              class="arrow"
-            >
+            <span class="arrow">
               →
             </span>
-
 
             <span>
               YEAR 11 IGCSE
@@ -1285,50 +816,34 @@ function pathwayDisplay(programme) {
           </div>
 
         </div>
-
       `;
 
 
     case "P5":
-
       return `
-
-        <div
-          class="decision-message warning"
-        >
+        <div class="decision-message warning">
 
           <h3>
             Special Applied Programme
           </h3>
 
-
-          <div
-            class="pathway-box"
-          >
+          <div class="pathway-box">
 
             <span>
               YEAR 9 SAP
             </span>
 
-
-            <span
-              class="arrow"
-            >
+            <span class="arrow">
               →
             </span>
-
 
             <span>
               YEAR 10 BTEC
             </span>
 
-
-            <span
-              class="arrow"
-            >
+            <span class="arrow">
               →
             </span>
-
 
             <span>
               YEAR 11 BTEC
@@ -1337,14 +852,10 @@ function pathwayDisplay(programme) {
           </div>
 
         </div>
-
       `;
-
   }
 
-
   return "";
-
 }
 
 
@@ -1353,47 +864,21 @@ function pathwayDisplay(programme) {
    ============================================================ */
 
 function fillSample() {
+  document.getElementById("bm").value = 65;
+  document.getElementById("mib").value = 63;
+  document.getElementById("irk").value = 61;
 
-  document.getElementById("bm").value =
-    65;
+  document.getElementById("english").value = 58;
+  document.getElementById("maths").value = 62;
+  document.getElementById("science").value = 64;
 
-  document.getElementById("mib").value =
-    63;
+  document.getElementById("ss").value = 55;
 
-  document.getElementById("irk").value =
-    61;
+  /* Arabic is optional */
+  document.getElementById("arabic").value = "";
 
-
-  document.getElementById("english").value =
-    58;
-
-  document.getElementById("maths").value =
-    62;
-
-  document.getElementById("science").value =
-    64;
-
-
-  document.getElementById("ss").value =
-    55;
-
-
-  /*
-     Arabic is blank to demonstrate
-     that Arabic is optional.
-  */
-
-  document.getElementById("arabic").value =
-    "";
-
-
-  document.getElementById("drama").value =
-    52;
-
-
-  document.getElementById("bat").value =
-    58;
-
+  document.getElementById("drama").value = 52;
+  document.getElementById("bat").value = 58;
 }
 
 
@@ -1402,22 +887,12 @@ function fillSample() {
    ============================================================ */
 
 function resetResult() {
-
   const resultCard =
-    document.getElementById(
-      "resultCard"
-    );
+    document.getElementById("resultCard");
 
-
-  if (
-    resultCard
-  ) {
-
-    resultCard.hidden =
-      true;
-
+  if (resultCard) {
+    resultCard.hidden = true;
   }
-
 }
 
 
@@ -1426,208 +901,83 @@ function resetResult() {
    ============================================================ */
 
 function main() {
-
-
-  /* ----------------------------------------------------------
-     COPYRIGHT YEAR
-     ---------------------------------------------------------- */
-
   const year =
-    document.getElementById(
-      "year"
-    );
+    document.getElementById("year");
 
-
-  if (
-    year
-  ) {
-
+  if (year) {
     year.textContent =
       new Date().getFullYear();
-
   }
 
-
-
-  /* ----------------------------------------------------------
-     SAMPLE BUTTON
-     ---------------------------------------------------------- */
 
   const sampleButton =
-    document.getElementById(
-      "btnSample"
-    );
+    document.getElementById("btnSample");
 
-
-  if (
-    sampleButton
-  ) {
-
+  if (sampleButton) {
     sampleButton.addEventListener(
-
       "click",
-
       function() {
-
         fillSample();
-
         resetResult();
-
       }
-
     );
-
   }
 
-
-
-  /* ----------------------------------------------------------
-     FORM
-     ---------------------------------------------------------- */
 
   const scoreForm =
-    document.getElementById(
-      "scoreForm"
-    );
+    document.getElementById("scoreForm");
 
-
-  if (
-    !scoreForm
-  ) {
-
-    console.error(
-      "scoreForm was not found."
-    );
-
+  if (!scoreForm) {
+    console.error("scoreForm was not found.");
     return;
-
   }
 
 
-
-  /* ----------------------------------------------------------
-     RESET
-     ---------------------------------------------------------- */
-
   scoreForm.addEventListener(
-
     "reset",
-
     resetResult
-
   );
 
 
-
-  /* ----------------------------------------------------------
-     SUBMIT
-     ---------------------------------------------------------- */
-
   scoreForm.addEventListener(
-
     "submit",
-
     function(e) {
-
-
       e.preventDefault();
 
-
       try {
-
-
         const scores = {
+          bm: valNum("bm"),
+          mib: valNum("mib"),
+          irk: valNum("irk"),
 
+          english: valNum("english"),
+          maths: valNum("maths"),
+          science: valNum("science"),
 
-          /* BM / MIB / IRK */
+          ss: valNum("ss"),
 
-          bm:
-            valNum("bm"),
+          /* OPTIONAL */
+          arabic: valOptionalNum("arabic"),
 
-          mib:
-            valNum("mib"),
+          /* OPTIONAL */
+          drama: valOptionalNum("drama"),
 
-          irk:
-            valNum("irk"),
-
-
-          /* Core */
-
-          english:
-            valNum("english"),
-
-          maths:
-            valNum("maths"),
-
-          science:
-            valNum("science"),
-
-
-          /* Non-core */
-
-          ss:
-            valNum("ss"),
-
-
-          /*
-             Arabic OPTIONAL
-          */
-
-          arabic:
-            valOptionalNum(
-              "arabic"
-            ),
-
-
-          /*
-             Drama OPTIONAL
-          */
-
-          drama:
-            valOptionalNum(
-              "drama"
-            ),
-
-
-          bat:
-            valNum("bat")
-
+          bat: valNum("bat")
         };
 
 
-
-        /* ----------------------------------------------------
-           GET RECOMMENDATION
-           ---------------------------------------------------- */
-
         const result =
-          evaluateStreaming(
-            scores
-          );
+          evaluateStreaming(scores);
 
-
-
-        /* ----------------------------------------------------
-           RESULT ELEMENTS
-           ---------------------------------------------------- */
 
         const resultCard =
-          document.getElementById(
-            "resultCard"
-          );
-
+          document.getElementById("resultCard");
 
         const predLabel =
-          document.getElementById(
-            "predLabel"
-          );
-
+          document.getElementById("predLabel");
 
         const explainPanel =
-          document.getElementById(
-            "explainPanel"
-          );
-
+          document.getElementById("explainPanel");
 
 
         if (
@@ -1635,25 +985,16 @@ function main() {
           !predLabel ||
           !explainPanel
         ) {
-
           throw new Error(
             "One or more result elements are missing from index.html."
           );
-
         }
 
 
-
-        /* ----------------------------------------------------
-           DISPLAY RESULT
-           ---------------------------------------------------- */
-
-        resultCard.hidden =
-          false;
+        resultCard.hidden = false;
 
 
         predLabel.textContent =
-
           `${result.programme.name} — ${result.programme.stream}`;
 
 
@@ -1666,73 +1007,34 @@ function main() {
 
 
         explainPanel.innerHTML =
-          explanation(
-            result
-          );
+          explanation(result);
 
-
-
-        /* ----------------------------------------------------
-           OLD PROBABILITY DISPLAY
-           ---------------------------------------------------- */
 
         const probs =
-          document.getElementById(
-            "probBars"
-          );
+          document.getElementById("probBars");
 
-
-        if (
-          probs
-        ) {
-
-          probs.innerHTML =
-            "";
-
-          probs.style.display =
-            "none";
-
+        if (probs) {
+          probs.innerHTML = "";
+          probs.style.display = "none";
         }
 
 
-
-        /* ----------------------------------------------------
-           SCROLL TO RESULT
-           ---------------------------------------------------- */
-
         resultCard.scrollIntoView({
-
-          behavior:
-            "smooth",
-
-          block:
-            "start"
-
+          behavior: "smooth",
+          block: "start"
         });
-
 
       }
 
-
       catch(error) {
-
-
-        console.error(
-          error
-        );
-
+        console.error(error);
 
         alert(
           error.message
         );
-
-
       }
-
     }
-
   );
-
 }
 
 
@@ -1741,9 +1043,6 @@ function main() {
    ============================================================ */
 
 window.addEventListener(
-
   "DOMContentLoaded",
-
   main
-
 );
