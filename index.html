@@ -7,57 +7,90 @@
   <title>Year 8 Streaming Predictor — Brunei</title>
 
   <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 
 <body>
 
+  <!-- =======================================================
+       HEADER
+       ======================================================= -->
+
   <header class="site-header">
+
     <div class="container">
 
-      <h1>Year 8 Streaming Predictor</h1>
+      <h1>
+        Year 8 Streaming Predictor
+      </h1>
 
       <p class="subtitle">
+
         Year 9 Streaming Recommendation
+
         <br>
 
         <span class="muted">
-          Based on the school criteria for Programme 1–5.
+          Best-match recommendation based on
+          Programme 1–5 streaming criteria.
         </span>
+
       </p>
 
     </div>
+
   </header>
 
+
+
+  <!-- =======================================================
+       MAIN
+       ======================================================= -->
 
   <main class="container">
 
 
-    <!-- STUDENT SCORE ENTRY -->
+    <!-- =====================================================
+         STUDENT SCORE ENTRY
+         ===================================================== -->
 
     <section class="card">
 
-      <h2>Enter Student Scores</h2>
+      <h2>
+        Enter Student Scores
+      </h2>
 
       <p class="section-note">
+
         Enter each subject score as a percentage from
-        <strong>0–100</strong>.
+
+        <strong>
+          0–100
+        </strong>.
+
       </p>
 
 
       <form id="scoreForm">
 
 
-        <!-- BM / MIB / IRK -->
+        <!-- =================================================
+             BM / MIB / IRK
+             ================================================= -->
 
         <div class="subject-section">
 
-          <h3>BM, MIB & IRK</h3>
+          <h3>
+            BM, MIB & IRK
+          </h3>
+
 
           <div class="grid">
 
+
             <label>
+
               Bahasa Melayu
+
               <input
                 type="number"
                 id="bm"
@@ -67,11 +100,15 @@
                 required
                 placeholder="e.g. 72"
               >
+
             </label>
 
 
+
             <label>
+
               MIB
+
               <input
                 type="number"
                 id="mib"
@@ -81,11 +118,15 @@
                 required
                 placeholder="e.g. 68"
               >
+
             </label>
 
 
+
             <label>
+
               Pengetahuan Ugama Islam (IRK)
+
               <input
                 type="number"
                 id="irk"
@@ -95,7 +136,9 @@
                 required
                 placeholder="e.g. 70"
               >
+
             </label>
+
 
           </div>
 
@@ -103,16 +146,30 @@
 
 
 
-        <!-- CORE SUBJECTS -->
+        <!-- =================================================
+             CORE SUBJECTS
+             ================================================= -->
 
         <div class="subject-section">
 
-          <h3>Core Subjects</h3>
+          <h3>
+            Core Subjects
+          </h3>
+
+
+          <p class="muted">
+            English, Mathematics and Science receive
+            greater weighting in the programme matching.
+          </p>
+
 
           <div class="grid">
 
+
             <label>
+
               English
+
               <input
                 type="number"
                 id="english"
@@ -122,11 +179,15 @@
                 required
                 placeholder="e.g. 74"
               >
+
             </label>
 
 
+
             <label>
+
               Mathematics
+
               <input
                 type="number"
                 id="maths"
@@ -136,11 +197,15 @@
                 required
                 placeholder="e.g. 82"
               >
+
             </label>
 
 
+
             <label>
+
               Science
+
               <input
                 type="number"
                 id="science"
@@ -150,7 +215,9 @@
                 required
                 placeholder="e.g. 78"
               >
+
             </label>
+
 
           </div>
 
@@ -158,23 +225,37 @@
 
 
 
-        <!-- NON-CORE SUBJECTS -->
+        <!-- =================================================
+             NON-CORE SUBJECTS
+             ================================================= -->
 
         <div class="subject-section">
 
-          <h3>Non-Core Subjects</h3>
+          <h3>
+            Non-Core Subjects
+          </h3>
+
 
           <p class="muted">
-            The predictor will use the student's
-            <strong>best 3 available non-core scores</strong>.
+
+            The predictor uses the student's
+
+            <strong>
+              best 3 available non-core scores
+            </strong>.
+
             Arabic and Drama are optional.
+
           </p>
 
 
           <div class="grid">
 
+
             <label>
+
               Social Studies
+
               <input
                 type="number"
                 id="ss"
@@ -184,11 +265,18 @@
                 required
                 placeholder="e.g. 65"
               >
+
             </label>
 
 
+
             <label>
-              Arabic (Optional)
+
+              Arabic
+              <span class="optional-label">
+                Optional
+              </span>
+
               <input
                 type="number"
                 id="arabic"
@@ -197,11 +285,18 @@
                 step="0.1"
                 placeholder="Leave blank if not taken"
               >
+
             </label>
 
 
+
             <label>
-              Drama (Optional)
+
+              Drama
+              <span class="optional-label">
+                Optional
+              </span>
+
               <input
                 type="number"
                 id="drama"
@@ -210,11 +305,15 @@
                 step="0.1"
                 placeholder="Leave blank if not taken"
               >
+
             </label>
 
 
+
             <label>
+
               BAT
+
               <input
                 type="number"
                 id="bat"
@@ -224,30 +323,45 @@
                 required
                 placeholder="e.g. 55"
               >
+
             </label>
+
 
           </div>
 
 
           <p class="small-note">
-            At least 3 non-core subject marks must be available
-            for a programme recommendation.
+
+            At least
+
+            <strong>
+              3 non-core subject marks
+            </strong>
+
+            must be available for the recommendation.
+
           </p>
 
         </div>
 
 
 
-        <!-- BUTTONS -->
+        <!-- =================================================
+             BUTTONS
+             ================================================= -->
 
         <div class="actions">
+
 
           <button
             type="submit"
             class="btn-primary"
           >
+
             Predict Stream
+
           </button>
+
 
 
           <button
@@ -255,16 +369,22 @@
             id="btnSample"
             class="btn-outline"
           >
+
             Fill Sample
+
           </button>
+
 
 
           <button
             type="reset"
             class="btn-ghost"
           >
+
             Clear
+
           </button>
+
 
         </div>
 
@@ -275,7 +395,9 @@
 
 
 
-    <!-- RESULT -->
+    <!-- =====================================================
+         RESULT
+         ===================================================== -->
 
     <section
       class="result card"
@@ -283,7 +405,18 @@
       hidden
     >
 
-      <h2>Recommended Year 9 Stream</h2>
+      <h2>
+        Recommended Year 9 Stream
+      </h2>
+
+
+      <p class="result-note">
+
+        The recommendation is based on the programme
+        with the strongest weighted match to the
+        student's subject profile.
+
+      </p>
 
 
       <div
@@ -291,6 +424,8 @@
         class="badge"
       ></div>
 
+
+      <!-- Kept for compatibility -->
 
       <div
         id="probBars"
@@ -303,65 +438,238 @@
         class="explain-panel"
       ></div>
 
+
     </section>
 
 
 
-    <!-- STREAMING CRITERIA -->
+    <!-- =====================================================
+         SCORING METHOD
+         ===================================================== -->
 
     <section class="card info">
 
-      <h2>Year 9 Streaming Criteria</h2>
+      <h2>
+        How the Recommendation is Calculated
+      </h2>
+
+
+      <div class="weight-grid">
+
+
+        <div class="weight-card">
+
+          <strong>
+            English
+          </strong>
+
+          <span>
+            2 points
+          </span>
+
+        </div>
+
+
+        <div class="weight-card">
+
+          <strong>
+            Mathematics
+          </strong>
+
+          <span>
+            2 points
+          </span>
+
+        </div>
+
+
+        <div class="weight-card">
+
+          <strong>
+            Science
+          </strong>
+
+          <span>
+            2 points
+          </span>
+
+        </div>
+
+
+        <div class="weight-card">
+
+          <strong>
+            Bahasa Melayu
+          </strong>
+
+          <span>
+            1 point
+          </span>
+
+        </div>
+
+
+        <div class="weight-card">
+
+          <strong>
+            MIB
+          </strong>
+
+          <span>
+            1 point
+          </span>
+
+        </div>
+
+
+        <div class="weight-card">
+
+          <strong>
+            IRK
+          </strong>
+
+          <span>
+            1 point
+          </span>
+
+        </div>
+
+
+        <div class="weight-card">
+
+          <strong>
+            Best 3 Non-Core
+          </strong>
+
+          <span>
+            1 point each
+          </span>
+
+        </div>
+
+
+      </div>
+
+
+      <p class="muted">
+
+        Maximum weighted score:
+
+        <strong>
+          12 points
+        </strong>.
+
+        The programme with the strongest overall
+        match is recommended.
+
+      </p>
+
+
+      <p class="muted">
+
+        If the two strongest programmes are very close,
+        the result will be identified as a
+
+        <strong>
+          borderline profile
+        </strong>
+
+        for further school consideration.
+
+      </p>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         STREAMING CRITERIA
+         ===================================================== -->
+
+    <section class="card info">
+
+      <h2>
+        Year 9 Streaming Criteria
+      </h2>
 
 
       <div class="criteria-table-wrapper">
 
+
         <table class="streaming-table">
+
 
           <thead>
 
             <tr>
 
-              <th>Subject</th>
+              <th>
+                Subject
+              </th>
+
 
               <th class="prog1">
+
                 Prog 1
+
                 <small>
-                  General Education Science<br>
+                  General Education Science
+                  <br>
                   4 Years
                 </small>
+
               </th>
+
 
               <th class="prog2">
+
                 Prog 2
+
                 <small>
-                  General Education Science<br>
+                  General Education Science
+                  <br>
                   5 Years
                 </small>
+
               </th>
+
 
               <th class="prog3">
+
                 Prog 3
+
                 <small>
-                  General Education Art<br>
+                  General Education Art
+                  <br>
                   5 Years
                 </small>
+
               </th>
+
 
               <th class="prog4">
+
                 Prog 4
+
                 <small>
-                  Applied Programme<br>
+                  Applied Programme
+                  <br>
                   5 Years
                 </small>
+
               </th>
 
+
               <th class="prog5">
+
                 Prog 5
+
                 <small>
-                  Special Applied Programme<br>
+                  Special Applied Programme
+                  <br>
                   5 Years
                 </small>
+
               </th>
 
             </tr>
@@ -369,88 +677,231 @@
           </thead>
 
 
+
           <tbody>
-
-            <tr>
-              <th>Bahasa Melayu</th>
-              <td>70% & Above</td>
-              <td>60% & Above</td>
-              <td>40% – 59%</td>
-              <td>40% – 59%</td>
-              <td>Less than 40%</td>
-            </tr>
-
-
-            <tr>
-              <th>MIB</th>
-              <td>70% & Above</td>
-              <td>60% & Above</td>
-              <td>40% – 59%</td>
-              <td>40% – 59%</td>
-              <td>Less than 40%</td>
-            </tr>
-
-
-            <tr>
-              <th>IRK</th>
-              <td>70% & Above</td>
-              <td>60% & Above</td>
-              <td>40% – 59%</td>
-              <td>40% – 59%</td>
-              <td>Less than 40%</td>
-            </tr>
-
-
-            <tr>
-              <th>English</th>
-              <td>70% & Above</td>
-              <td>60% & Above</td>
-              <td>40% – 49%</td>
-              <td>20% – 39%</td>
-              <td>Less than 20%</td>
-            </tr>
-
-
-            <tr>
-              <th>Mathematics</th>
-              <td>70% & Above</td>
-              <td>60% & Above</td>
-              <td>40% – 49%</td>
-              <td>20% – 39%</td>
-              <td>Less than 20%</td>
-            </tr>
-
-
-            <tr>
-              <th>Science</th>
-              <td>70% & Above</td>
-              <td>60% & Above</td>
-              <td>40% – 49%</td>
-              <td>20% – 39%</td>
-              <td>Less than 20%</td>
-            </tr>
 
 
             <tr>
 
               <th>
-                Non-Core
-                <small>
-                  Best 3 available subjects
-                </small>
+                Bahasa Melayu
               </th>
 
-              <td>60% & Above</td>
-              <td>50% & Above</td>
-              <td>20% – 49%</td>
-              <td>20% – 49%</td>
-              <td>Less than 20%</td>
+              <td>
+                70% & Above
+              </td>
+
+              <td>
+                60% & Above
+              </td>
+
+              <td>
+                40% – 59%
+              </td>
+
+              <td>
+                40% – 59%
+              </td>
+
+              <td>
+                Less than 40%
+              </td>
 
             </tr>
 
+
+
+            <tr>
+
+              <th>
+                MIB
+              </th>
+
+              <td>
+                70% & Above
+              </td>
+
+              <td>
+                60% & Above
+              </td>
+
+              <td>
+                40% – 59%
+              </td>
+
+              <td>
+                40% – 59%
+              </td>
+
+              <td>
+                Less than 40%
+              </td>
+
+            </tr>
+
+
+
+            <tr>
+
+              <th>
+                IRK
+              </th>
+
+              <td>
+                70% & Above
+              </td>
+
+              <td>
+                60% & Above
+              </td>
+
+              <td>
+                40% – 59%
+              </td>
+
+              <td>
+                40% – 59%
+              </td>
+
+              <td>
+                Less than 40%
+              </td>
+
+            </tr>
+
+
+
+            <tr>
+
+              <th>
+                English
+              </th>
+
+              <td>
+                70% & Above
+              </td>
+
+              <td>
+                60% & Above
+              </td>
+
+              <td>
+                40% – 49%
+              </td>
+
+              <td>
+                20% – 39%
+              </td>
+
+              <td>
+                Less than 20%
+              </td>
+
+            </tr>
+
+
+
+            <tr>
+
+              <th>
+                Mathematics
+              </th>
+
+              <td>
+                70% & Above
+              </td>
+
+              <td>
+                60% & Above
+              </td>
+
+              <td>
+                40% – 49%
+              </td>
+
+              <td>
+                20% – 39%
+              </td>
+
+              <td>
+                Less than 20%
+              </td>
+
+            </tr>
+
+
+
+            <tr>
+
+              <th>
+                Science
+              </th>
+
+              <td>
+                70% & Above
+              </td>
+
+              <td>
+                60% & Above
+              </td>
+
+              <td>
+                40% – 49%
+              </td>
+
+              <td>
+                20% – 39%
+              </td>
+
+              <td>
+                Less than 20%
+              </td>
+
+            </tr>
+
+
+
+            <tr>
+
+              <th>
+
+                Non-Core
+
+                <small>
+                  Best 3 available subjects
+                </small>
+
+              </th>
+
+
+              <td>
+                60% & Above
+              </td>
+
+              <td>
+                50% & Above
+              </td>
+
+              <td>
+                20% – 49%
+              </td>
+
+              <td>
+                20% – 49%
+              </td>
+
+              <td>
+                Less than 20%
+              </td>
+
+            </tr>
+
+
           </tbody>
 
+
         </table>
+
 
       </div>
 
@@ -458,15 +909,21 @@
 
 
 
-    <!-- PROGRAMME PATHWAYS -->
+    <!-- =====================================================
+         PROGRAMME PATHWAYS
+         ===================================================== -->
 
     <section class="card">
 
-      <h2>Programme Pathways</h2>
+      <h2>
+        Programme Pathways
+      </h2>
 
 
       <div class="programme-list">
 
+
+        <!-- PROGRAMME 1 -->
 
         <div class="programme-card prog1-card">
 
@@ -482,15 +939,28 @@
             Express Programme • 4 Years
           </p>
 
+
           <div class="mini-pathway">
-            <span>Year 9 ADV</span>
-            <span class="arrow">→</span>
-            <span>Year 10 ADV</span>
+
+            <span>
+              Year 9 ADV
+            </span>
+
+            <span class="arrow">
+              →
+            </span>
+
+            <span>
+              Year 10 ADV
+            </span>
+
           </div>
 
         </div>
 
 
+
+        <!-- PROGRAMME 2 -->
 
         <div class="programme-card prog2-card">
 
@@ -506,17 +976,36 @@
             5-Year Programme
           </p>
 
+
           <div class="mini-pathway">
-            <span>Year 9 O Level</span>
-            <span class="arrow">→</span>
-            <span>Year 10 O Level</span>
-            <span class="arrow">→</span>
-            <span>Year 11 O Level</span>
+
+            <span>
+              Year 9 O Level
+            </span>
+
+            <span class="arrow">
+              →
+            </span>
+
+            <span>
+              Year 10 O Level
+            </span>
+
+            <span class="arrow">
+              →
+            </span>
+
+            <span>
+              Year 11 O Level
+            </span>
+
           </div>
 
         </div>
 
 
+
+        <!-- PROGRAMME 3 -->
 
         <div class="programme-card prog3-card">
 
@@ -532,17 +1021,36 @@
             5-Year Programme
           </p>
 
+
           <div class="mini-pathway">
-            <span>Year 9 O Level</span>
-            <span class="arrow">→</span>
-            <span>Year 10 O Level</span>
-            <span class="arrow">→</span>
-            <span>Year 11 O Level</span>
+
+            <span>
+              Year 9 O Level
+            </span>
+
+            <span class="arrow">
+              →
+            </span>
+
+            <span>
+              Year 10 O Level
+            </span>
+
+            <span class="arrow">
+              →
+            </span>
+
+            <span>
+              Year 11 O Level
+            </span>
+
           </div>
 
         </div>
 
 
+
+        <!-- PROGRAMME 4 -->
 
         <div class="programme-card prog4-card">
 
@@ -558,17 +1066,36 @@
             5-Year Programme
           </p>
 
+
           <div class="mini-pathway">
-            <span>Year 9 IGCSE</span>
-            <span class="arrow">→</span>
-            <span>Year 10 IGCSE</span>
-            <span class="arrow">→</span>
-            <span>Year 11 IGCSE</span>
+
+            <span>
+              Year 9 IGCSE
+            </span>
+
+            <span class="arrow">
+              →
+            </span>
+
+            <span>
+              Year 10 IGCSE
+            </span>
+
+            <span class="arrow">
+              →
+            </span>
+
+            <span>
+              Year 11 IGCSE
+            </span>
+
           </div>
 
         </div>
 
 
+
+        <!-- PROGRAMME 5 -->
 
         <div class="programme-card prog5-card">
 
@@ -584,12 +1111,29 @@
             5-Year Programme
           </p>
 
+
           <div class="mini-pathway">
-            <span>Year 9 SAP</span>
-            <span class="arrow">→</span>
-            <span>Year 10 BTEC</span>
-            <span class="arrow">→</span>
-            <span>Year 11 BTEC</span>
+
+            <span>
+              Year 9 SAP
+            </span>
+
+            <span class="arrow">
+              →
+            </span>
+
+            <span>
+              Year 10 BTEC
+            </span>
+
+            <span class="arrow">
+              →
+            </span>
+
+            <span>
+              Year 11 BTEC
+            </span>
+
           </div>
 
         </div>
@@ -601,35 +1145,101 @@
 
 
 
-    <!-- INFORMATION -->
+    <!-- =====================================================
+         INFORMATION
+         ===================================================== -->
 
     <section class="card info">
 
-      <h2>About this Predictor</h2>
+      <h2>
+        About this Predictor
+      </h2>
+
 
       <ul>
 
         <li>
-          <strong>Method:</strong>
-          Rule-based Year 9 streaming criteria.
+
+          <strong>
+            Method:
+          </strong>
+
+          Weighted best-match streaming model.
+
         </li>
 
-        <li>
-          <strong>Programmes:</strong>
-          Programme 1, Programme 2, Programme 3,
-          Programme 4 and Programme 5.
-        </li>
 
         <li>
-          <strong>Non-core subjects:</strong>
+
+          <strong>
+            Programmes:
+          </strong>
+
+          Programme 1, Programme 2,
+          Programme 3, Programme 4
+          and Programme 5.
+
+        </li>
+
+
+        <li>
+
+          <strong>
+            Core weighting:
+          </strong>
+
+          English, Mathematics and Science
+          receive 2 points each.
+
+        </li>
+
+
+        <li>
+
+          <strong>
+            Other compulsory subjects:
+          </strong>
+
+          Bahasa Melayu, MIB and IRK
+          receive 1 point each.
+
+        </li>
+
+
+        <li>
+
+          <strong>
+            Non-core subjects:
+          </strong>
+
           The best 3 available scores are used.
           Arabic and Drama are optional.
+
         </li>
 
+
         <li>
-          <strong>Privacy:</strong>
+
+          <strong>
+            Borderline profiles:
+          </strong>
+
+          Students whose two strongest programme
+          scores are very close will be highlighted
+          for further consideration.
+
+        </li>
+
+
+        <li>
+
+          <strong>
+            Privacy:
+          </strong>
+
           All calculations are performed locally
           in the browser.
+
         </li>
 
       </ul>
@@ -637,9 +1247,11 @@
 
       <p class="muted">
 
-        Students with mixed score patterns that do not fit
-        one complete programme band will be flagged for
-        manual review.
+        This predictor is intended to support
+        school streaming decisions. The final
+        placement may also take account of
+        teacher judgement, student progress and
+        other relevant school information.
 
       </p>
 
@@ -650,14 +1262,22 @@
 
 
 
+  <!-- =======================================================
+       FOOTER
+       ======================================================= -->
+
   <footer class="site-footer">
 
     <div class="container">
 
       <p>
-        © <span id="year"></span>
+
+        ©
+        <span id="year"></span>
+
         Year 8 Streaming Predictor
         • Brunei
+
       </p>
 
     </div>
@@ -665,7 +1285,13 @@
   </footer>
 
 
+
+  <!-- =======================================================
+       JAVASCRIPT
+       ======================================================= -->
+
   <script src="app.js"></script>
+
 
 </body>
 </html>
