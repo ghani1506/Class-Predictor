@@ -12,10 +12,6 @@
 
 <body>
 
-  <!-- =======================================================
-       HEADER
-       ======================================================= -->
-
   <header class="site-header">
     <div class="container">
 
@@ -34,16 +30,10 @@
   </header>
 
 
-  <!-- =======================================================
-       MAIN
-       ======================================================= -->
-
   <main class="container">
 
 
-    <!-- =====================================================
-         STUDENT SCORE ENTRY
-         ===================================================== -->
+    <!-- STUDENT SCORE ENTRY -->
 
     <section class="card">
 
@@ -58,9 +48,7 @@
       <form id="scoreForm">
 
 
-        <!-- =============================
-             BM / MIB / IRK
-             ============================= -->
+        <!-- BM / MIB / IRK -->
 
         <div class="subject-section">
 
@@ -115,9 +103,7 @@
 
 
 
-        <!-- =============================
-             CORE SUBJECTS
-             ============================= -->
+        <!-- CORE SUBJECTS -->
 
         <div class="subject-section">
 
@@ -172,17 +158,16 @@
 
 
 
-        <!-- =============================
-             NON-CORE SUBJECTS
-             ============================= -->
+        <!-- NON-CORE SUBJECTS -->
 
         <div class="subject-section">
 
           <h3>Non-Core Subjects</h3>
 
           <p class="muted">
-            The predictor will automatically use the student's
-            <strong>best 3</strong> scores from the four subjects below.
+            The predictor will use the student's
+            <strong>best 3 available non-core scores</strong>.
+            Arabic and Drama are optional.
           </p>
 
 
@@ -203,29 +188,27 @@
 
 
             <label>
-              Arabic
+              Arabic (Optional)
               <input
                 type="number"
                 id="arabic"
                 min="0"
                 max="100"
                 step="0.1"
-                required
-                placeholder="e.g. 60"
+                placeholder="Leave blank if not taken"
               >
             </label>
 
 
             <label>
-              Drama
+              Drama (Optional)
               <input
                 type="number"
                 id="drama"
                 min="0"
                 max="100"
                 step="0.1"
-                required
-                placeholder="e.g. 68"
+                placeholder="Leave blank if not taken"
               >
             </label>
 
@@ -245,13 +228,17 @@
 
           </div>
 
+
+          <p class="small-note">
+            At least 3 non-core subject marks must be available
+            for a programme recommendation.
+          </p>
+
         </div>
 
 
 
-        <!-- =============================
-             BUTTONS
-             ============================= -->
+        <!-- BUTTONS -->
 
         <div class="actions">
 
@@ -288,9 +275,7 @@
 
 
 
-    <!-- =====================================================
-         RESULT
-         ===================================================== -->
+    <!-- RESULT -->
 
     <section
       class="result card"
@@ -307,9 +292,6 @@
       ></div>
 
 
-      <!-- Kept for compatibility with app.js.
-           app.js hides this element. -->
-
       <div
         id="probBars"
         class="probs"
@@ -325,9 +307,7 @@
 
 
 
-    <!-- =====================================================
-         STREAMING CRITERIA
-         ===================================================== -->
+    <!-- STREAMING CRITERIA -->
 
     <section class="card info">
 
@@ -452,10 +432,11 @@
 
 
             <tr>
+
               <th>
                 Non-Core
                 <small>
-                  Best 3 subjects
+                  Best 3 available subjects
                 </small>
               </th>
 
@@ -477,9 +458,7 @@
 
 
 
-    <!-- =====================================================
-         PROGRAMME PATHWAYS
-         ===================================================== -->
+    <!-- PROGRAMME PATHWAYS -->
 
     <section class="card">
 
@@ -505,7 +484,7 @@
 
           <div class="mini-pathway">
             <span>Year 9 ADV</span>
-            <span>→</span>
+            <span class="arrow">→</span>
             <span>Year 10 ADV</span>
           </div>
 
@@ -529,9 +508,9 @@
 
           <div class="mini-pathway">
             <span>Year 9 O Level</span>
-            <span>→</span>
+            <span class="arrow">→</span>
             <span>Year 10 O Level</span>
-            <span>→</span>
+            <span class="arrow">→</span>
             <span>Year 11 O Level</span>
           </div>
 
@@ -555,9 +534,9 @@
 
           <div class="mini-pathway">
             <span>Year 9 O Level</span>
-            <span>→</span>
+            <span class="arrow">→</span>
             <span>Year 10 O Level</span>
-            <span>→</span>
+            <span class="arrow">→</span>
             <span>Year 11 O Level</span>
           </div>
 
@@ -581,9 +560,9 @@
 
           <div class="mini-pathway">
             <span>Year 9 IGCSE</span>
-            <span>→</span>
+            <span class="arrow">→</span>
             <span>Year 10 IGCSE</span>
-            <span>→</span>
+            <span class="arrow">→</span>
             <span>Year 11 IGCSE</span>
           </div>
 
@@ -607,9 +586,9 @@
 
           <div class="mini-pathway">
             <span>Year 9 SAP</span>
-            <span>→</span>
+            <span class="arrow">→</span>
             <span>Year 10 BTEC</span>
-            <span>→</span>
+            <span class="arrow">→</span>
             <span>Year 11 BTEC</span>
           </div>
 
@@ -622,9 +601,7 @@
 
 
 
-    <!-- =====================================================
-         INFORMATION
-         ===================================================== -->
+    <!-- INFORMATION -->
 
     <section class="card info">
 
@@ -645,8 +622,8 @@
 
         <li>
           <strong>Non-core subjects:</strong>
-          The best 3 scores from Social Studies,
-          Arabic, Drama and BAT are used.
+          The best 3 available scores are used.
+          Arabic and Drama are optional.
         </li>
 
         <li>
@@ -660,10 +637,9 @@
 
       <p class="muted">
 
-        The result is intended to support the streaming
-        process. Students with mixed score patterns that do
-        not fit one complete programme band will be flagged
-        for manual review.
+        Students with mixed score patterns that do not fit
+        one complete programme band will be flagged for
+        manual review.
 
       </p>
 
@@ -673,10 +649,6 @@
   </main>
 
 
-
-  <!-- =======================================================
-       FOOTER
-       ======================================================= -->
 
   <footer class="site-footer">
 
@@ -692,11 +664,6 @@
 
   </footer>
 
-
-
-  <!-- =======================================================
-       JAVASCRIPT
-       ======================================================= -->
 
   <script src="app.js"></script>
 
