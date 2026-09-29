@@ -1,342 +1,240 @@
 {
-  "classes": [
-    "Express",
-    "Science",
-    "General",
-    "Applied",
-    "Special Applied"
-  ],
-  "trees": [
+  "programmes": [
     {
-      "feature": 0,
-      "threshold": 84.5,
-      "left": {
-        "feature": 2,
-        "threshold": 79.5,
-        "left": {
-          "feature": 1,
-          "threshold": 64.5,
-          "left": {
-            "feature": 3,
-            "threshold": 49.5,
-            "left": {
-              "value": [
-                0.01,
-                0.01,
-                0.01,
-                0.01,
-                0.96
-              ]
-            },
-            "right": {
-              "value": [
-                0.01,
-                0.01,
-                0.01,
-                0.96,
-                0.01
-              ]
-            }
-          },
-          "right": {
-            "value": [
-              0.01,
-              0.01,
-              0.96,
-              0.01,
-              0.01
-            ]
-          }
+      "code": "P1",
+      "name": "Prog 1",
+      "title": "General Education Science",
+      "duration": "4 Years",
+      "stream": "Year 9 ADV",
+      "pathway": [
+        "Year 9 ADV",
+        "Year 10 ADV"
+      ],
+      "colour": "#f58f95",
+      "criteria": {
+        "bm": {
+          "min": 70,
+          "max": 100
         },
-        "right": {
-          "value": [
-            0.01,
-            0.96,
-            0.01,
-            0.01,
-            0.01
-          ]
-        }
-      },
-      "right": {
-        "feature": 2,
-        "threshold": 84.5,
-        "left": {
-          "value": [
-            0.96,
-            0.01,
-            0.01,
-            0.01,
-            0.01
-          ]
+        "mib": {
+          "min": 70,
+          "max": 100
         },
-        "right": {
-          "value": [
-            0.96,
-            0.01,
-            0.01,
-            0.01,
-            0.01
-          ]
+        "irk": {
+          "min": 70,
+          "max": 100
+        },
+        "english": {
+          "min": 70,
+          "max": 100
+        },
+        "maths": {
+          "min": 70,
+          "max": 100
+        },
+        "science": {
+          "min": 70,
+          "max": 100
+        },
+        "nonCore": {
+          "min": 60,
+          "max": 100,
+          "bestOf": 3
         }
       }
     },
+
     {
-      "feature": 0,
-      "threshold": 87.5,
-      "left": {
-        "feature": 2,
-        "threshold": 84.5,
-        "left": {
-          "feature": 1,
-          "threshold": 69.5,
-          "left": {
-            "value": [
-              0.01,
-              0.01,
-              0.01,
-              0.96,
-              0.01
-            ]
-          },
-          "right": {
-            "value": [
-              0.01,
-              0.01,
-              0.96,
-              0.01,
-              0.01
-            ]
-          }
+      "code": "P2",
+      "name": "Prog 2",
+      "title": "General Education Science",
+      "duration": "5 Years",
+      "stream": "Year 9 O Level - Science",
+      "pathway": [
+        "Year 9 O Level",
+        "Year 10 O Level",
+        "Year 11 O Level"
+      ],
+      "colour": "#46cf5a",
+      "criteria": {
+        "bm": {
+          "min": 60,
+          "max": 100
         },
-        "right": {
-          "value": [
-            0.01,
-            0.96,
-            0.01,
-            0.01,
-            0.01
-          ]
-        }
-      },
-      "right": {
-        "feature": 1,
-        "threshold": 79.5,
-        "left": {
-          "value": [
-            0.01,
-            0.96,
-            0.01,
-            0.01,
-            0.01
-          ]
+        "mib": {
+          "min": 60,
+          "max": 100
         },
-        "right": {
-          "value": [
-            0.96,
-            0.01,
-            0.01,
-            0.01,
-            0.01
-          ]
+        "irk": {
+          "min": 60,
+          "max": 100
+        },
+        "english": {
+          "min": 60,
+          "max": 100
+        },
+        "maths": {
+          "min": 60,
+          "max": 100
+        },
+        "science": {
+          "min": 60,
+          "max": 100
+        },
+        "nonCore": {
+          "min": 50,
+          "max": 100,
+          "bestOf": 3
         }
       }
     },
+
     {
-      "feature": 2,
-      "threshold": 89.5,
-      "left": {
-        "feature": 0,
-        "threshold": 74.5,
-        "left": {
-          "feature": 3,
-          "threshold": 59.5,
-          "left": {
-            "value": [
-              0.01,
-              0.01,
-              0.01,
-              0.01,
-              0.96
-            ]
-          },
-          "right": {
-            "value": [
-              0.01,
-              0.01,
-              0.01,
-              0.96,
-              0.01
-            ]
-          }
+      "code": "P3",
+      "name": "Prog 3",
+      "title": "General Education Art",
+      "duration": "5 Years",
+      "stream": "Year 9 O Level - Art",
+      "pathway": [
+        "Year 9 O Level",
+        "Year 10 O Level",
+        "Year 11 O Level"
+      ],
+      "colour": "#bff4bf",
+      "criteria": {
+        "bm": {
+          "min": 40,
+          "max": 59.999
         },
-        "right": {
-          "value": [
-            0.01,
-            0.01,
-            0.96,
-            0.01,
-            0.01
-          ]
-        }
-      },
-      "right": {
-        "feature": 0,
-        "threshold": 84.5,
-        "left": {
-          "value": [
-            0.01,
-            0.96,
-            0.01,
-            0.01,
-            0.01
-          ]
+        "mib": {
+          "min": 40,
+          "max": 59.999
         },
-        "right": {
-          "value": [
-            0.96,
-            0.01,
-            0.01,
-            0.01,
-            0.01
-          ]
+        "irk": {
+          "min": 40,
+          "max": 59.999
+        },
+        "english": {
+          "min": 40,
+          "max": 49.999
+        },
+        "maths": {
+          "min": 40,
+          "max": 49.999
+        },
+        "science": {
+          "min": 40,
+          "max": 49.999
+        },
+        "nonCore": {
+          "min": 20,
+          "max": 49.999,
+          "bestOf": 3
         }
       }
     },
+
     {
-      "feature": 3,
-      "threshold": 84.5,
-      "left": {
-        "feature": 1,
-        "threshold": 69.5,
-        "left": {
-          "feature": 0,
-          "threshold": 59.5,
-          "left": {
-            "value": [
-              0.01,
-              0.01,
-              0.01,
-              0.01,
-              0.96
-            ]
-          },
-          "right": {
-            "value": [
-              0.01,
-              0.01,
-              0.01,
-              0.96,
-              0.01
-            ]
-          }
+      "code": "P4",
+      "name": "Prog 4",
+      "title": "Applied Programme",
+      "duration": "5 Years",
+      "stream": "Year 9 IGCSE",
+      "pathway": [
+        "Year 9 IGCSE",
+        "Year 10 IGCSE",
+        "Year 11 IGCSE"
+      ],
+      "colour": "#d8b5f4",
+      "criteria": {
+        "bm": {
+          "min": 40,
+          "max": 59.999
         },
-        "right": {
-          "value": [
-            0.01,
-            0.01,
-            0.96,
-            0.01,
-            0.01
-          ]
-        }
-      },
-      "right": {
-        "feature": 0,
-        "threshold": 84.5,
-        "left": {
-          "value": [
-            0.01,
-            0.01,
-            0.96,
-            0.01,
-            0.01
-          ]
+        "mib": {
+          "min": 40,
+          "max": 59.999
         },
-        "right": {
-          "value": [
-            0.96,
-            0.01,
-            0.01,
-            0.01,
-            0.01
-          ]
+        "irk": {
+          "min": 40,
+          "max": 59.999
+        },
+        "english": {
+          "min": 20,
+          "max": 39.999
+        },
+        "maths": {
+          "min": 20,
+          "max": 39.999
+        },
+        "science": {
+          "min": 20,
+          "max": 39.999
+        },
+        "nonCore": {
+          "min": 20,
+          "max": 49.999,
+          "bestOf": 3
         }
       }
     },
+
     {
-      "feature": 0,
-      "threshold": 64.5,
-      "left": {
-        "feature": 2,
-        "threshold": 64.5,
-        "left": {
-          "value": [
-            0.01,
-            0.01,
-            0.01,
-            0.01,
-            0.96
-          ]
+      "code": "P5",
+      "name": "Prog 5",
+      "title": "Special Applied Programme",
+      "duration": "5 Years",
+      "stream": "Year 9 SAP",
+      "pathway": [
+        "Year 9 SAP",
+        "Year 10 BTEC",
+        "Year 11 BTEC"
+      ],
+      "colour": "#fff98c",
+      "criteria": {
+        "bm": {
+          "min": 0,
+          "max": 39.999
         },
-        "right": {
-          "value": [
-            0.01,
-            0.01,
-            0.01,
-            0.96,
-            0.01
-          ]
-        }
-      },
-      "right": {
-        "feature": 1,
-        "threshold": 64.5,
-        "left": {
-          "feature": 5,
-          "threshold": 49.5,
-          "left": {
-            "value": [
-              0.01,
-              0.01,
-              0.01,
-              0.96,
-              0.01
-            ]
-          },
-          "right": {
-            "value": [
-              0.01,
-              0.01,
-              0.96,
-              0.01,
-              0.01
-            ]
-          }
+        "mib": {
+          "min": 0,
+          "max": 39.999
         },
-        "right": {
-          "feature": 4,
-          "threshold": 74.5,
-          "left": {
-            "value": [
-              0.01,
-              0.01,
-              0.96,
-              0.01,
-              0.01
-            ]
-          },
-          "right": {
-            "value": [
-              0.01,
-              0.96,
-              0.01,
-              0.01,
-              0.01
-            ]
-          }
+        "irk": {
+          "min": 0,
+          "max": 39.999
+        },
+        "english": {
+          "min": 0,
+          "max": 19.999
+        },
+        "maths": {
+          "min": 0,
+          "max": 19.999
+        },
+        "science": {
+          "min": 0,
+          "max": 19.999
+        },
+        "nonCore": {
+          "min": 0,
+          "max": 19.999,
+          "bestOf": 3
         }
       }
     }
-  ]
+  ],
+
+  "nonCoreSubjects": [
+    "ss",
+    "arabic",
+    "drama",
+    "bat"
+  ],
+
+  "notes": {
+    "method": "Rule-based streaming criteria",
+    "nonCore": "Use the best 3 non-core subject scores",
+    "manualReview": "Students whose scores do not fit one complete programme band should be flagged for manual review."
+  }
 }
