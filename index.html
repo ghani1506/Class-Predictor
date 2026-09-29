@@ -3,83 +3,702 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>Year 8 Streaming Predictor — Brunei</title>
+
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
+
 <body>
+
+  <!-- =======================================================
+       HEADER
+       ======================================================= -->
+
   <header class="site-header">
     <div class="container">
+
       <h1>Year 8 Streaming Predictor</h1>
-      <p class="subtitle">Estimate a student's likely class placement using 7 subject scores.<br><span class="muted">Demo model (Random Forest) — focus on core subjects: Maths, English, Science, Malay.</span></p>
+
+      <p class="subtitle">
+        Year 9 Streaming Recommendation
+        <br>
+
+        <span class="muted">
+          Based on the school criteria for Programme 1–5.
+        </span>
+      </p>
+
     </div>
   </header>
 
+
+  <!-- =======================================================
+       MAIN
+       ======================================================= -->
+
   <main class="container">
+
+
+    <!-- =====================================================
+         STUDENT SCORE ENTRY
+         ===================================================== -->
+
     <section class="card">
-      <h2>Enter Scores (0–100)</h2>
+
+      <h2>Enter Student Scores</h2>
+
+      <p class="section-note">
+        Enter each subject score as a percentage from
+        <strong>0–100</strong>.
+      </p>
+
+
       <form id="scoreForm">
-        <div class="grid">
-          <label>Mathematics
-            <input type="number" id="maths" min="0" max="100" step="1" required placeholder="e.g., 82">
-          </label>
-          <label>English
-            <input type="number" id="english" min="0" max="100" step="1" required placeholder="e.g., 74">
-          </label>
-          <label>Science
-            <input type="number" id="science" min="0" max="100" step="1" required placeholder="e.g., 78">
-          </label>
-          <label>Malay
-            <input type="number" id="malay" min="0" max="100" step="1" required placeholder="e.g., 70">
-          </label>
-          <label>Subject 5
-            <input type="number" id="sub5" min="0" max="100" step="1" required placeholder="e.g., 66">
-          </label>
-          <label>Subject 6
-            <input type="number" id="sub6" min="0" max="100" step="1" required placeholder="e.g., 60">
-          </label>
-          <label>Subject 7
-            <input type="number" id="sub7" min="0" max="100" step="1" required placeholder="e.g., 72">
-          </label>
+
+
+        <!-- =============================
+             BM / MIB / IRK
+             ============================= -->
+
+        <div class="subject-section">
+
+          <h3>BM, MIB & IRK</h3>
+
+          <div class="grid">
+
+            <label>
+              Bahasa Melayu
+              <input
+                type="number"
+                id="bm"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="e.g. 72"
+              >
+            </label>
+
+
+            <label>
+              MIB
+              <input
+                type="number"
+                id="mib"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="e.g. 68"
+              >
+            </label>
+
+
+            <label>
+              Pengetahuan Ugama Islam (IRK)
+              <input
+                type="number"
+                id="irk"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="e.g. 70"
+              >
+            </label>
+
+          </div>
+
         </div>
+
+
+
+        <!-- =============================
+             CORE SUBJECTS
+             ============================= -->
+
+        <div class="subject-section">
+
+          <h3>Core Subjects</h3>
+
+          <div class="grid">
+
+            <label>
+              English
+              <input
+                type="number"
+                id="english"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="e.g. 74"
+              >
+            </label>
+
+
+            <label>
+              Mathematics
+              <input
+                type="number"
+                id="maths"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="e.g. 82"
+              >
+            </label>
+
+
+            <label>
+              Science
+              <input
+                type="number"
+                id="science"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="e.g. 78"
+              >
+            </label>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- =============================
+             NON-CORE SUBJECTS
+             ============================= -->
+
+        <div class="subject-section">
+
+          <h3>Non-Core Subjects</h3>
+
+          <p class="muted">
+            The predictor will automatically use the student's
+            <strong>best 3</strong> scores from the four subjects below.
+          </p>
+
+
+          <div class="grid">
+
+            <label>
+              Social Studies
+              <input
+                type="number"
+                id="ss"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="e.g. 65"
+              >
+            </label>
+
+
+            <label>
+              Arabic
+              <input
+                type="number"
+                id="arabic"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="e.g. 60"
+              >
+            </label>
+
+
+            <label>
+              Drama
+              <input
+                type="number"
+                id="drama"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="e.g. 68"
+              >
+            </label>
+
+
+            <label>
+              BAT
+              <input
+                type="number"
+                id="bat"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="e.g. 55"
+              >
+            </label>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- =============================
+             BUTTONS
+             ============================= -->
 
         <div class="actions">
-          <button type="submit" class="btn-primary">Predict Stream</button>
-          <button type="button" id="btnSample" class="btn-outline">Fill Sample</button>
-          <button type="reset" class="btn-ghost">Clear</button>
+
+          <button
+            type="submit"
+            class="btn-primary"
+          >
+            Predict Stream
+          </button>
+
+
+          <button
+            type="button"
+            id="btnSample"
+            class="btn-outline"
+          >
+            Fill Sample
+          </button>
+
+
+          <button
+            type="reset"
+            class="btn-ghost"
+          >
+            Clear
+          </button>
+
         </div>
+
+
       </form>
+
     </section>
 
-    <section class="result card" id="resultCard" hidden>
-      <h2>Predicted Stream</h2>
-      <div id="predLabel" class="badge"></div>
-      <div id="probBars" class="probs"></div>
-      <details class="explain">
-        <summary>Why this result?</summary>
-        <div id="explainPanel"></div>
-      </details>
+
+
+    <!-- =====================================================
+         RESULT
+         ===================================================== -->
+
+    <section
+      class="result card"
+      id="resultCard"
+      hidden
+    >
+
+      <h2>Recommended Year 9 Stream</h2>
+
+
+      <div
+        id="predLabel"
+        class="badge"
+      ></div>
+
+
+      <!-- Kept for compatibility with app.js.
+           app.js hides this element. -->
+
+      <div
+        id="probBars"
+        class="probs"
+      ></div>
+
+
+      <div
+        id="explainPanel"
+        class="explain-panel"
+      ></div>
+
     </section>
+
+
+
+    <!-- =====================================================
+         STREAMING CRITERIA
+         ===================================================== -->
 
     <section class="card info">
-      <h2>About this demo</h2>
-      <ul>
-        <li><strong>Model:</strong> Browser-side Random Forest (5 trees, hand-initialized for demo).</li>
-        <li><strong>Inputs:</strong> 7 subjects (core: Maths, English, Science, Malay) + 3 others.</li>
-        <li><strong>Outputs:</strong> Express, Science, General, Applied, Special Applied.</li>
-        <li><strong>Privacy:</strong> Everything runs in your browser; no data leaves the page.</li>
-      </ul>
-      <p class="muted">Note: Replace the included <code>model.json</code> with your trained trees to use real school data.</p>
+
+      <h2>Year 9 Streaming Criteria</h2>
+
+
+      <div class="criteria-table-wrapper">
+
+        <table class="streaming-table">
+
+          <thead>
+
+            <tr>
+
+              <th>Subject</th>
+
+              <th class="prog1">
+                Prog 1
+                <small>
+                  General Education Science<br>
+                  4 Years
+                </small>
+              </th>
+
+              <th class="prog2">
+                Prog 2
+                <small>
+                  General Education Science<br>
+                  5 Years
+                </small>
+              </th>
+
+              <th class="prog3">
+                Prog 3
+                <small>
+                  General Education Art<br>
+                  5 Years
+                </small>
+              </th>
+
+              <th class="prog4">
+                Prog 4
+                <small>
+                  Applied Programme<br>
+                  5 Years
+                </small>
+              </th>
+
+              <th class="prog5">
+                Prog 5
+                <small>
+                  Special Applied Programme<br>
+                  5 Years
+                </small>
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            <tr>
+              <th>Bahasa Melayu</th>
+              <td>70% & Above</td>
+              <td>60% & Above</td>
+              <td>40% – 59%</td>
+              <td>40% – 59%</td>
+              <td>Less than 40%</td>
+            </tr>
+
+
+            <tr>
+              <th>MIB</th>
+              <td>70% & Above</td>
+              <td>60% & Above</td>
+              <td>40% – 59%</td>
+              <td>40% – 59%</td>
+              <td>Less than 40%</td>
+            </tr>
+
+
+            <tr>
+              <th>IRK</th>
+              <td>70% & Above</td>
+              <td>60% & Above</td>
+              <td>40% – 59%</td>
+              <td>40% – 59%</td>
+              <td>Less than 40%</td>
+            </tr>
+
+
+            <tr>
+              <th>English</th>
+              <td>70% & Above</td>
+              <td>60% & Above</td>
+              <td>40% – 49%</td>
+              <td>20% – 39%</td>
+              <td>Less than 20%</td>
+            </tr>
+
+
+            <tr>
+              <th>Mathematics</th>
+              <td>70% & Above</td>
+              <td>60% & Above</td>
+              <td>40% – 49%</td>
+              <td>20% – 39%</td>
+              <td>Less than 20%</td>
+            </tr>
+
+
+            <tr>
+              <th>Science</th>
+              <td>70% & Above</td>
+              <td>60% & Above</td>
+              <td>40% – 49%</td>
+              <td>20% – 39%</td>
+              <td>Less than 20%</td>
+            </tr>
+
+
+            <tr>
+              <th>
+                Non-Core
+                <small>
+                  Best 3 subjects
+                </small>
+              </th>
+
+              <td>60% & Above</td>
+              <td>50% & Above</td>
+              <td>20% – 49%</td>
+              <td>20% – 49%</td>
+              <td>Less than 20%</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
     </section>
+
+
+
+    <!-- =====================================================
+         PROGRAMME PATHWAYS
+         ===================================================== -->
+
+    <section class="card">
+
+      <h2>Programme Pathways</h2>
+
+
+      <div class="programme-list">
+
+
+        <div class="programme-card prog1-card">
+
+          <span class="programme-number">
+            Prog 1
+          </span>
+
+          <h3>
+            General Education Science
+          </h3>
+
+          <p>
+            Express Programme • 4 Years
+          </p>
+
+          <div class="mini-pathway">
+            <span>Year 9 ADV</span>
+            <span>→</span>
+            <span>Year 10 ADV</span>
+          </div>
+
+        </div>
+
+
+
+        <div class="programme-card prog2-card">
+
+          <span class="programme-number">
+            Prog 2
+          </span>
+
+          <h3>
+            General Education Science
+          </h3>
+
+          <p>
+            5-Year Programme
+          </p>
+
+          <div class="mini-pathway">
+            <span>Year 9 O Level</span>
+            <span>→</span>
+            <span>Year 10 O Level</span>
+            <span>→</span>
+            <span>Year 11 O Level</span>
+          </div>
+
+        </div>
+
+
+
+        <div class="programme-card prog3-card">
+
+          <span class="programme-number">
+            Prog 3
+          </span>
+
+          <h3>
+            General Education Art
+          </h3>
+
+          <p>
+            5-Year Programme
+          </p>
+
+          <div class="mini-pathway">
+            <span>Year 9 O Level</span>
+            <span>→</span>
+            <span>Year 10 O Level</span>
+            <span>→</span>
+            <span>Year 11 O Level</span>
+          </div>
+
+        </div>
+
+
+
+        <div class="programme-card prog4-card">
+
+          <span class="programme-number">
+            Prog 4
+          </span>
+
+          <h3>
+            Applied Programme
+          </h3>
+
+          <p>
+            5-Year Programme
+          </p>
+
+          <div class="mini-pathway">
+            <span>Year 9 IGCSE</span>
+            <span>→</span>
+            <span>Year 10 IGCSE</span>
+            <span>→</span>
+            <span>Year 11 IGCSE</span>
+          </div>
+
+        </div>
+
+
+
+        <div class="programme-card prog5-card">
+
+          <span class="programme-number">
+            Prog 5
+          </span>
+
+          <h3>
+            Special Applied Programme
+          </h3>
+
+          <p>
+            5-Year Programme
+          </p>
+
+          <div class="mini-pathway">
+            <span>Year 9 SAP</span>
+            <span>→</span>
+            <span>Year 10 BTEC</span>
+            <span>→</span>
+            <span>Year 11 BTEC</span>
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         INFORMATION
+         ===================================================== -->
+
+    <section class="card info">
+
+      <h2>About this Predictor</h2>
+
+      <ul>
+
+        <li>
+          <strong>Method:</strong>
+          Rule-based Year 9 streaming criteria.
+        </li>
+
+        <li>
+          <strong>Programmes:</strong>
+          Programme 1, Programme 2, Programme 3,
+          Programme 4 and Programme 5.
+        </li>
+
+        <li>
+          <strong>Non-core subjects:</strong>
+          The best 3 scores from Social Studies,
+          Arabic, Drama and BAT are used.
+        </li>
+
+        <li>
+          <strong>Privacy:</strong>
+          All calculations are performed locally
+          in the browser.
+        </li>
+
+      </ul>
+
+
+      <p class="muted">
+
+        The result is intended to support the streaming
+        process. Students with mixed score patterns that do
+        not fit one complete programme band will be flagged
+        for manual review.
+
+      </p>
+
+    </section>
+
+
   </main>
 
+
+
+  <!-- =======================================================
+       FOOTER
+       ======================================================= -->
+
   <footer class="site-footer">
+
     <div class="container">
-      <p>© <span id="year"></span> Year 8 Streaming Predictor • Built for Brunei schools • Demo only</p>
+
+      <p>
+        © <span id="year"></span>
+        Year 8 Streaming Predictor
+        • Brunei
+      </p>
+
     </div>
+
   </footer>
 
-  <script src="rf.js"></script>
+
+
+  <!-- =======================================================
+       JAVASCRIPT
+       ======================================================= -->
+
   <script src="app.js"></script>
+
 </body>
 </html>
