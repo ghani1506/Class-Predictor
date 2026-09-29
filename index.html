@@ -226,220 +226,126 @@
 
 
         <!-- =================================================
-             NON-CORE SUBJECTS
-             ================================================= -->
+     NON-CORE SUBJECTS
+     ================================================= -->
 
-        <div class="subject-section">
+<div class="subject-section">
 
-          <h3>
-            Non-Core Subjects
-          </h3>
+  <h3>
+    Non-Core Subjects
+  </h3>
 
+  <p class="muted">
+    The predictor uses the student's
+    <strong>best 3 available non-core scores</strong>.
+    Either Arabic or Drama may be left blank.
+  </p>
 
-          <p class="muted">
 
-            The predictor uses the student's
+  <div class="grid">
 
-            <strong>
-              best 3 available non-core scores
-            </strong>.
 
-            Arabic and Drama are optional.
+    <!-- SOCIAL STUDIES - REQUIRED -->
 
-          </p>
+    <label>
 
+      Social Studies
 
-          <div class="grid">
+      <input
+        type="number"
+        id="ss"
+        min="0"
+        max="100"
+        step="0.1"
+        required
+        placeholder="e.g. 65"
+      >
 
+    </label>
 
-            <label>
 
-              Social Studies
+    <!-- ARABIC - OPTIONAL -->
 
-              <input
-                type="number"
-                id="ss"
-                min="0"
-                max="100"
-                step="0.1"
-                required
-                placeholder="e.g. 65"
-              >
+    <label>
 
-            </label>
+      Arabic
 
+      <span class="optional-label">
+        Optional
+      </span>
 
+      <input
+        type="number"
+        id="arabic"
+        min="0"
+        max="100"
+        step="0.1"
+        placeholder="Leave blank if not taken"
+      >
 
-            <label>
+    </label>
 
-              Arabic
-              <span class="optional-label">
-                Optional
-              </span>
 
-              <input
-                type="number"
-                id="arabic"
-                min="0"
-                max="100"
-                step="0.1"
-                placeholder="Leave blank if not taken"
-              >
+    <!-- DRAMA - OPTIONAL -->
 
-            </label>
+    <label>
 
+      Drama
 
+      <span class="optional-label">
+        Optional
+      </span>
 
-            <label>
+      <input
+        type="number"
+        id="drama"
+        min="0"
+        max="100"
+        step="0.1"
+        placeholder="Leave blank if not taken"
+      >
 
-              Drama
-              <span class="optional-label">
-                Optional
-              </span>
+    </label>
 
-              <input
-                type="number"
-                id="drama"
-                min="0"
-                max="100"
-                step="0.1"
-                placeholder="Leave blank if not taken"
-              >
 
-            </label>
+    <!-- BAT - REQUIRED -->
 
+    <label>
 
+      BAT
 
-            <label>
+      <input
+        type="number"
+        id="bat"
+        min="0"
+        max="100"
+        step="0.1"
+        required
+        placeholder="e.g. 55"
+      >
 
-              BAT
+    </label>
 
-              <input
-                type="number"
-                id="bat"
-                min="0"
-                max="100"
-                step="0.1"
-                required
-                placeholder="e.g. 55"
-              >
 
-            </label>
+  </div>
 
 
-          </div>
+  <p class="small-note">
 
+    At least
+    <strong>3 non-core subject marks</strong>
+    must be available.
 
-          <p class="small-note">
+    <br>
 
-            At least
+    Arabic or Drama may be left blank,
+    but at least one of them must contain a mark
+    because Social Studies + BAT only provide
+    two non-core subjects.
 
-            <strong>
-              3 non-core subject marks
-            </strong>
+  </p>
 
-            must be available for the recommendation.
-
-          </p>
-
-        </div>
-
-
-
-        <!-- =================================================
-             BUTTONS
-             ================================================= -->
-
-        <div class="actions">
-
-
-          <button
-            type="submit"
-            class="btn-primary"
-          >
-
-            Predict Stream
-
-          </button>
-
-
-
-          <button
-            type="button"
-            id="btnSample"
-            class="btn-outline"
-          >
-
-            Fill Sample
-
-          </button>
-
-
-
-          <button
-            type="reset"
-            class="btn-ghost"
-          >
-
-            Clear
-
-          </button>
-
-
-        </div>
-
-
-      </form>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         RESULT
-         ===================================================== -->
-
-    <section
-      class="result card"
-      id="resultCard"
-      hidden
-    >
-
-      <h2>
-        Recommended Year 9 Stream
-      </h2>
-
-
-      <p class="result-note">
-
-        The recommendation is based on the programme
-        with the strongest weighted match to the
-        student's subject profile.
-
-      </p>
-
-
-      <div
-        id="predLabel"
-        class="badge"
-      ></div>
-
-
-      <!-- Kept for compatibility -->
-
-      <div
-        id="probBars"
-        class="probs"
-      ></div>
-
-
-      <div
-        id="explainPanel"
-        class="explain-panel"
-      ></div>
-
-
-    </section>
+</div>
 
 
 
