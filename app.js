@@ -1,6 +1,7 @@
 /* ============================================================
-   YEAR 7 and 8 STREAMING PREDICTOR
-   Based on Criteria for Streaming to Year 9
+   YEAR 7 AND 8 STREAMING PREDICTOR
+   Weighted Best-Match Model
+   Arabic and Drama are optional
    ============================================================ */
 
 const PROGRAMMES = [
@@ -11,7 +12,6 @@ const PROGRAMMES = [
     duration: "4 Years",
     stream: "Year 9 ADV",
     colour: "#f78b8f",
-
     ranges: {
       bm: [70, 100],
       mib: [70, 100],
@@ -30,7 +30,6 @@ const PROGRAMMES = [
     duration: "5 Years",
     stream: "Year 9 O Level - Science",
     colour: "#45cf59",
-
     ranges: {
       bm: [60, 100],
       mib: [60, 100],
@@ -49,7 +48,6 @@ const PROGRAMMES = [
     duration: "5 Years",
     stream: "Year 9 O Level - Art",
     colour: "#bff3bf",
-
     ranges: {
       bm: [40, 59.999],
       mib: [40, 59.999],
@@ -68,7 +66,6 @@ const PROGRAMMES = [
     duration: "5 Years",
     stream: "Year 9 IGCSE",
     colour: "#d8b5f4",
-
     ranges: {
       bm: [40, 59.999],
       mib: [40, 59.999],
@@ -87,7 +84,6 @@ const PROGRAMMES = [
     duration: "5 Years",
     stream: "Year 9 SAP",
     colour: "#fff98c",
-
     ranges: {
       bm: [0, 39.999],
       mib: [0, 39.999],
@@ -102,7 +98,22 @@ const PROGRAMMES = [
 
 
 /* ============================================================
-   READ MARK
+   SUBJECT WEIGHTS
+   ============================================================ */
+
+const WEIGHTS = {
+  bm: 1,
+  mib: 1,
+  irk: 1,
+  english: 2,
+  maths: 2,
+  science: 2,
+  nonCore: 1
+};
+
+
+/* ============================================================
+   REQUIRED INPUT
    ============================================================ */
 
 function valNum(id) {
@@ -118,13 +129,53 @@ function valNum(id) {
     throw new Error(`Please enter a mark for ${id}.`);
   }
 
-  const v = Number(raw);
+  const value = Number(raw);
 
-  if (Number.isNaN(v) || v < 0 || v > 100) {
-    throw new Error(`Please enter a valid mark between 0 and 100 for ${id}.`);
+  if (
+    Number.isNaN(value) ||
+    value < 0 ||
+    value > 100
+  ) {
+    throw new Error(
+      `Please enter a valid mark between 0 and 100 for ${id}.`
+    );
   }
 
-  return v;
+  return value;
+}
+
+
+/* ============================================================
+   OPTIONAL INPUT
+   Arabic and Drama may be left blank.
+   ============================================================ */
+
+function valOptionalNum(id) {
+  const el = document.getElementById(id);
+
+  if (!el) {
+    throw new Error(`Input "${id}" was not found.`);
+  }
+
+  const raw = el.value.trim();
+
+  if (raw === "") {
+    return null;
+  }
+
+  const value = Number(raw);
+
+  if (
+    Number.isNaN(value) ||
+    value < 0 ||
+    value > 100
+  ) {
+    throw new Error(
+      `Please enter a valid mark between 0 and 100 for ${id}.`
+    );
+  }
+
+  return value;
 }
 
 
@@ -133,113 +184,29 @@ function valNum(id) {
    ============================================================ */
 
 function inRange(value, range) {
-  return value >= range[0] && value <= range[1];
+  return (
+    value >= range[0] &&
+    value <= range[1]
+  );
 }
 
 
 /* ============================================================
-   NON-CORE CHECK
-   Any 3 subjects from SS, Arabic, Drama, BAT
+   DISTANCE FROM RANGE
+   Used as a tie-breaker.
    ============================================================ */
 
-function getBestThreeNonCore(scores) {
-  const nonCoreSubjects = [
-    { name: "Social Studies", mark: scores.ss },
-    { name: "Arabic", mark: scores.arabic },
-    { name: "Drama", mark: scores.drama },
-    { name: "BAT", mark: scores.bat }
-  ];
+function distanceFromRange(value, range) {
 
-  return nonCoreSubjects
-    .sort((a, b) => b.mark - a.mark)
-    .slice(0, 3);
-}
-
-
-/* ============================================================
-   CHECK ONE PROGRAMME
-   ============================================================ */
-
-function checkProgramme(programme, scores) {
-
-  const bestThree = getBestThreeNonCore(scores);
-
-  const subjectChecks = [
-    {
-      name: "Bahasa Melayu",
-      mark: scores.bm,
-      range: programme.ranges.bm,
-      passed: inRange(scores.bm, programme.ranges.bm)
-    },
-    {
-      name: "MIB",
-      mark: scores.mib,
-      range: programme.ranges.mib,
-      passed: inRange(scores.mib, programme.ranges.mib)
-    },
-    {
-      name: "IRK",
-      mark: scores.irk,
-      range: programme.ranges.irk,
-      passed: inRange(scores.irk, programme.ranges.irk)
-    },
-    {
-      name: "English",
-      mark: scores.english,
-      range: programme.ranges.english,
-      passed: inRange(scores.english, programme.ranges.english)
-    },
-    {
-      name: "Mathematics",
-      mark: scores.maths,
-      range: programme.ranges.maths,
-      passed: inRange(scores.maths, programme.ranges.maths)
-    },
-    {
-      name: "Science",
-      mark: scores.science,
-      range: programme.ranges.science,
-      passed: inRange(scores.science, programme.ranges.science)
-    }
-  ];
-
-  const nonCorePassed =
-    bestThree.every(subject =>
-      inRange(subject.mark, programme.ranges.nonCore)
-    );
-
-  const passed =
-    subjectChecks.every(subject => subject.passed) &&
-    nonCorePassed;
-
-  return {
-    programme,
-    subjectChecks,
-    bestThree,
-    nonCorePassed,
-    passed
-  };
-}
-
-
-/* ============================================================
-   FIND STREAM
-   Highest matching programme wins
-   ============================================================ */
-
-function evaluateStreaming(scores) {
-
-  for (const programme of PROGRAMMES) {
-
-    const result =
-      checkProgramme(programme, scores);
-
-    if (result.passed) {
-      return result;
-    }
+  if (inRange(value, range)) {
+    return 0;
   }
 
-  return null;
+  if (value < range[0]) {
+    return range[0] - value;
+  }
+
+  return value - range[1];
 }
 
 
@@ -248,7 +215,6 @@ function evaluateStreaming(scores) {
    ============================================================ */
 
 function rangeText(range) {
-
   const min = range[0];
   const max = range[1];
 
@@ -265,31 +231,423 @@ function rangeText(range) {
 
 
 /* ============================================================
-   SUBJECT ROW
+   BEST 3 AVAILABLE NON-CORE SUBJECTS
+
+   Social Studies = required
+   BAT            = required
+   Arabic         = optional
+   Drama          = optional
+
+   Either Arabic OR Drama may be blank.
+   If all four are entered, the best 3 are used.
+   ============================================================ */
+
+function getBestThreeNonCore(scores) {
+
+  const nonCoreSubjects = [
+    {
+      key: "ss",
+      name: "Social Studies",
+      mark: scores.ss
+    },
+    {
+      key: "arabic",
+      name: "Arabic",
+      mark: scores.arabic
+    },
+    {
+      key: "drama",
+      name: "Drama",
+      mark: scores.drama
+    },
+    {
+      key: "bat",
+      name: "BAT",
+      mark: scores.bat
+    }
+  ];
+
+  const availableSubjects =
+    nonCoreSubjects.filter(
+      subject =>
+        subject.mark !== null &&
+        subject.mark !== undefined &&
+        !Number.isNaN(subject.mark)
+    );
+
+  if (availableSubjects.length < 3) {
+    throw new Error(
+      "At least 3 non-core marks are required. Either Arabic or Drama may be left blank."
+    );
+  }
+
+  return availableSubjects
+    .sort((a, b) => b.mark - a.mark)
+    .slice(0, 3);
+}
+
+
+/* ============================================================
+   SCORE ONE PROGRAMME
+   ============================================================ */
+
+function scoreProgramme(programme, scores) {
+
+  const bestThree =
+    getBestThreeNonCore(scores);
+
+  const checks = [
+    {
+      key: "bm",
+      name: "Bahasa Melayu",
+      mark: scores.bm,
+      range: programme.ranges.bm,
+      weight: WEIGHTS.bm
+    },
+
+    {
+      key: "mib",
+      name: "MIB",
+      mark: scores.mib,
+      range: programme.ranges.mib,
+      weight: WEIGHTS.mib
+    },
+
+    {
+      key: "irk",
+      name: "IRK",
+      mark: scores.irk,
+      range: programme.ranges.irk,
+      weight: WEIGHTS.irk
+    },
+
+    {
+      key: "english",
+      name: "English",
+      mark: scores.english,
+      range: programme.ranges.english,
+      weight: WEIGHTS.english
+    },
+
+    {
+      key: "maths",
+      name: "Mathematics",
+      mark: scores.maths,
+      range: programme.ranges.maths,
+      weight: WEIGHTS.maths
+    },
+
+    {
+      key: "science",
+      name: "Science",
+      mark: scores.science,
+      range: programme.ranges.science,
+      weight: WEIGHTS.science
+    }
+  ];
+
+
+  let score = 0;
+  let distance = 0;
+
+
+  const subjectChecks =
+    checks.map(subject => {
+
+      const passed =
+        inRange(
+          subject.mark,
+          subject.range
+        );
+
+      if (passed) {
+        score += subject.weight;
+      }
+
+      distance +=
+        distanceFromRange(
+          subject.mark,
+          subject.range
+        ) *
+        subject.weight;
+
+      return {
+        ...subject,
+        passed
+      };
+
+    });
+
+
+  const nonCoreChecks =
+    bestThree.map(subject => {
+
+      const passed =
+        inRange(
+          subject.mark,
+          programme.ranges.nonCore
+        );
+
+      if (passed) {
+        score += WEIGHTS.nonCore;
+      }
+
+      distance +=
+        distanceFromRange(
+          subject.mark,
+          programme.ranges.nonCore
+        );
+
+      return {
+        ...subject,
+        range: programme.ranges.nonCore,
+        weight: WEIGHTS.nonCore,
+        passed
+      };
+
+    });
+
+
+  const maxScore = 12;
+
+  const matchPercent =
+    Math.round(
+      (score / maxScore) * 100
+    );
+
+
+  return {
+    programme,
+    subjectChecks,
+    bestThree: nonCoreChecks,
+    score,
+    maxScore,
+    matchPercent,
+    distance
+  };
+}
+
+
+/* ============================================================
+   EVALUATE STREAMING
+   ============================================================ */
+
+function evaluateStreaming(scores) {
+
+  const results =
+    PROGRAMMES.map(
+      programme =>
+        scoreProgramme(
+          programme,
+          scores
+        )
+    );
+
+
+  /*
+     Ranking priority:
+
+     1. Highest weighted score
+     2. Lowest distance from programme band
+     3. Higher programme on an exact tie
+  */
+
+  results.sort(
+    (a, b) => {
+
+      if (b.score !== a.score) {
+        return b.score - a.score;
+      }
+
+      if (a.distance !== b.distance) {
+        return a.distance - b.distance;
+      }
+
+      return (
+        Number(
+          a.programme.code.substring(1)
+        ) -
+        Number(
+          b.programme.code.substring(1)
+        )
+      );
+
+    }
+  );
+
+
+  const best =
+    results[0];
+
+  const second =
+    results[1];
+
+
+  best.borderline =
+    second &&
+    (
+      best.score -
+      second.score
+    ) <= 1;
+
+
+  best.secondBest =
+    best.borderline
+      ? second
+      : null;
+
+
+  best.allResults =
+    results;
+
+
+  return best;
+}
+
+
+/* ============================================================
+   SUBJECT DISPLAY ROW
    ============================================================ */
 
 function subjectRow(subject) {
 
   return `
-    <div class="criteria-row ${subject.passed ? "pass" : "fail"}">
+
+    <div
+      class="criteria-row
+      ${subject.passed ? "pass" : "fail"}"
+    >
 
       <div class="criteria-subject">
         ${subject.name}
       </div>
 
+
       <div class="criteria-mark">
         ${subject.mark.toFixed(1)}%
       </div>
+
 
       <div class="criteria-required">
         ${rangeText(subject.range)}
       </div>
 
+
       <div class="criteria-status">
-        ${subject.passed ? "✓ Meets" : "✕ Outside Range"}
+
+        ${
+          subject.passed
+            ? `✓ Match (${subject.weight} pt${subject.weight > 1 ? "s" : ""})`
+            : "Outside Band"
+        }
+
       </div>
 
     </div>
+
+  `;
+}
+
+
+/* ============================================================
+   PROGRAMME COMPARISON TABLE
+   ============================================================ */
+
+function programmeScoreTable(result) {
+
+  const rows =
+    result.allResults
+      .map(item => {
+
+        const isBest =
+          item.programme.code ===
+          result.programme.code;
+
+        return `
+
+          <tr
+            class="${isBest ? "best-programme-row" : ""}"
+          >
+
+            <td>
+              <strong>
+                ${item.programme.name}
+              </strong>
+            </td>
+
+
+            <td>
+              ${item.programme.title}
+            </td>
+
+
+            <td>
+              <strong>
+                ${item.score}/${item.maxScore}
+              </strong>
+            </td>
+
+
+            <td>
+              ${item.matchPercent}%
+            </td>
+
+          </tr>
+
+        `;
+
+      })
+      .join("");
+
+
+  return `
+
+    <h3>
+      Programme Match Comparison
+    </h3>
+
+
+    <div class="criteria-table-wrapper">
+
+      <table
+        class="streaming-table match-table"
+      >
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Programme
+            </th>
+
+            <th>
+              Pathway
+            </th>
+
+            <th>
+              Score
+            </th>
+
+            <th>
+              Match
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          ${rows}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
   `;
 }
 
@@ -300,39 +658,88 @@ function subjectRow(subject) {
 
 function explanation(result) {
 
-  if (!result) {
-
-    return `
-      <div class="decision-message warning">
-        <h3>Manual Review Required</h3>
-
-        <p>
-          The marks entered do not fit one complete programme band.
-        </p>
-
-        <p>
-          This can happen when a student has mixed performance
-          across subject groups.
-        </p>
-
-        <p>
-          Please review the student manually using the full
-          streaming criteria.
-        </p>
-      </div>
-    `;
-  }
-
-
   const programme =
     result.programme;
 
 
+  let borderlineMessage =
+    "";
+
+
+  if (
+    result.borderline &&
+    result.secondBest
+  ) {
+
+    borderlineMessage = `
+
+      <div
+        class="decision-message warning"
+      >
+
+        <h3>
+          Borderline Profile
+        </h3>
+
+
+        <p>
+
+          The student's strongest match is
+
+          <strong>
+            ${programme.name}
+          </strong>,
+
+          but the profile is close to
+
+          <strong>
+            ${result.secondBest.programme.name}
+          </strong>.
+
+        </p>
+
+
+        <p>
+
+          ${programme.name}:
+
+          <strong>
+            ${result.score}/${result.maxScore}
+          </strong>
+
+          &nbsp; • &nbsp;
+
+          ${result.secondBest.programme.name}:
+
+          <strong>
+            ${result.secondBest.score}/${result.secondBest.maxScore}
+          </strong>
+
+        </p>
+
+
+        <p>
+          Teacher or school review may be useful
+          before final placement.
+        </p>
+
+      </div>
+
+    `;
+
+  }
+
+
   return `
 
-    <div class="prediction-summary">
+    <div
+      class="prediction-summary"
+    >
 
-      <h3>Recommended Streaming</h3>
+      <h3>
+        Recommended Streaming
+      </h3>
+
 
       <div
         class="stream-badge"
@@ -341,78 +748,86 @@ function explanation(result) {
           color:#111;
         "
       >
+
         ${programme.name}
+
       </div>
+
 
       <h2>
         ${programme.stream}
       </h2>
 
+
       <p>
+
         <strong>
           ${programme.title}
         </strong>
+
       </p>
+
 
       <p>
         ${programme.duration}
       </p>
 
+
+      <p>
+
+        Programme Match:
+
+        <strong>
+          ${result.matchPercent}%
+        </strong>
+
+        (${result.score}/${result.maxScore} weighted points)
+
+      </p>
+
+    </div>
+
+
+    ${borderlineMessage}
+
+
+    <h3>
+      Subject Match
+    </h3>
+
+
+    <div
+      class="criteria-group"
+    >
+
+      ${
+        result.subjectChecks
+          .map(subjectRow)
+          .join("")
+      }
+
     </div>
 
 
-    <h3>Subject Criteria</h3>
-
-    <div class="criteria-group">
-
-      ${result.subjectChecks
-        .map(subjectRow)
-        .join("")}
-
-    </div>
+    <h3>
+      Best 3 Available Non-Core Subjects
+    </h3>
 
 
-    <h3>Non-Core Subjects</h3>
+    <div
+      class="criteria-group"
+    >
 
-    <p>
-      Best 3 non-core subjects used:
-    </p>
-
-    <div class="criteria-group">
-
-      ${result.bestThree.map(subject => {
-
-        const passed =
-          inRange(
-            subject.mark,
-            programme.ranges.nonCore
-          );
-
-        return `
-          <div class="criteria-row ${passed ? "pass" : "fail"}">
-
-            <div class="criteria-subject">
-              ${subject.name}
-            </div>
-
-            <div class="criteria-mark">
-              ${subject.mark.toFixed(1)}%
-            </div>
-
-            <div class="criteria-required">
-              ${rangeText(programme.ranges.nonCore)}
-            </div>
-
-            <div class="criteria-status">
-              ${passed ? "✓ Meets" : "✕ Outside Range"}
-            </div>
-
-          </div>
-        `;
-
-      }).join("")}
+      ${
+        result.bestThree
+          .map(subjectRow)
+          .join("")
+      }
 
     </div>
+
+
+    ${programmeScoreTable(result)}
 
 
     ${pathwayDisplay(programme)}
@@ -427,128 +842,247 @@ function explanation(result) {
 
 function pathwayDisplay(programme) {
 
-  switch(programme.code) {
+  switch (programme.code) {
+
 
     case "P1":
+
       return `
-        <div class="decision-message success">
 
-          <h3>General Education Science</h3>
+        <div
+          class="decision-message success"
+        >
 
-          <div class="pathway-box">
+          <h3>
+            General Education Science
+          </h3>
 
-            <span>YEAR 9 ADV</span>
 
-            <span class="arrow">→</span>
+          <div
+            class="pathway-box"
+          >
 
-            <span>YEAR 10 ADV</span>
+            <span>
+              YEAR 9 ADV
+            </span>
+
+            <span
+              class="arrow"
+            >
+              →
+            </span>
+
+            <span>
+              YEAR 10 ADV
+            </span>
 
           </div>
+
 
           <p>
             Express pathway — 4 Years
           </p>
 
         </div>
+
       `;
 
 
     case "P2":
+
       return `
-        <div class="decision-message success">
 
-          <h3>General Education Science</h3>
+        <div
+          class="decision-message success"
+        >
 
-          <div class="pathway-box">
+          <h3>
+            General Education Science
+          </h3>
 
-            <span>YEAR 9 O LVL</span>
 
-            <span class="arrow">→</span>
+          <div
+            class="pathway-box"
+          >
 
-            <span>YEAR 10 O LVL</span>
+            <span>
+              YEAR 9 O LEVEL
+            </span>
 
-            <span class="arrow">→</span>
+            <span
+              class="arrow"
+            >
+              →
+            </span>
 
-            <span>YEAR 11 O LVL</span>
+            <span>
+              YEAR 10 O LEVEL
+            </span>
+
+            <span
+              class="arrow"
+            >
+              →
+            </span>
+
+            <span>
+              YEAR 11 O LEVEL
+            </span>
 
           </div>
 
         </div>
+
       `;
 
 
     case "P3":
+
       return `
-        <div class="decision-message success">
 
-          <h3>General Education Art</h3>
+        <div
+          class="decision-message success"
+        >
 
-          <div class="pathway-box">
+          <h3>
+            General Education Art
+          </h3>
 
-            <span>YEAR 9 O LVL</span>
 
-            <span class="arrow">→</span>
+          <div
+            class="pathway-box"
+          >
 
-            <span>YEAR 10 O LVL</span>
+            <span>
+              YEAR 9 O LEVEL
+            </span>
 
-            <span class="arrow">→</span>
+            <span
+              class="arrow"
+            >
+              →
+            </span>
 
-            <span>YEAR 11 O LVL</span>
+            <span>
+              YEAR 10 O LEVEL
+            </span>
+
+            <span
+              class="arrow"
+            >
+              →
+            </span>
+
+            <span>
+              YEAR 11 O LEVEL
+            </span>
 
           </div>
 
         </div>
+
       `;
 
 
     case "P4":
+
       return `
-        <div class="decision-message warning">
 
-          <h3>Applied Programme</h3>
+        <div
+          class="decision-message warning"
+        >
 
-          <div class="pathway-box">
+          <h3>
+            Applied Programme
+          </h3>
 
-            <span>YEAR 9 IGCSE</span>
 
-            <span class="arrow">→</span>
+          <div
+            class="pathway-box"
+          >
 
-            <span>YEAR 10 IGCSE</span>
+            <span>
+              YEAR 9 IGCSE
+            </span>
 
-            <span class="arrow">→</span>
+            <span
+              class="arrow"
+            >
+              →
+            </span>
 
-            <span>YEAR 11 IGCSE</span>
+            <span>
+              YEAR 10 IGCSE
+            </span>
+
+            <span
+              class="arrow"
+            >
+              →
+            </span>
+
+            <span>
+              YEAR 11 IGCSE
+            </span>
 
           </div>
 
         </div>
+
       `;
 
 
     case "P5":
+
       return `
-        <div class="decision-message warning">
 
-          <h3>Special Applied Programme</h3>
+        <div
+          class="decision-message warning"
+        >
 
-          <div class="pathway-box">
+          <h3>
+            Special Applied Programme
+          </h3>
 
-            <span>YEAR 9 SAP</span>
 
-            <span class="arrow">→</span>
+          <div
+            class="pathway-box"
+          >
 
-            <span>YEAR 10 BTEC</span>
+            <span>
+              YEAR 9 SAP
+            </span>
 
-            <span class="arrow">→</span>
+            <span
+              class="arrow"
+            >
+              →
+            </span>
 
-            <span>YEAR 11 BTEC</span>
+            <span>
+              YEAR 10 BTEC
+            </span>
+
+            <span
+              class="arrow"
+            >
+              →
+            </span>
+
+            <span>
+              YEAR 11 BTEC
+            </span>
 
           </div>
 
         </div>
+
       `;
 
   }
+
+
+  return "";
 }
 
 
@@ -558,18 +1092,67 @@ function pathwayDisplay(programme) {
 
 function fillSample() {
 
-  document.getElementById("bm").value = 72;
-  document.getElementById("mib").value = 75;
-  document.getElementById("irk").value = 71;
+  document.getElementById("bm").value =
+    65;
 
-  document.getElementById("english").value = 76;
-  document.getElementById("maths").value = 74;
-  document.getElementById("science").value = 73;
+  document.getElementById("mib").value =
+    63;
 
-  document.getElementById("ss").value = 65;
-  document.getElementById("arabic").value = 62;
-  document.getElementById("drama").value = 68;
-  document.getElementById("bat").value = 55;
+  document.getElementById("irk").value =
+    61;
+
+
+  document.getElementById("english").value =
+    58;
+
+  document.getElementById("maths").value =
+    62;
+
+  document.getElementById("science").value =
+    64;
+
+
+  document.getElementById("ss").value =
+    55;
+
+
+  /*
+     Arabic left blank to demonstrate
+     that it is optional.
+  */
+
+  document.getElementById("arabic").value =
+    "";
+
+
+  document.getElementById("drama").value =
+    52;
+
+  document.getElementById("bat").value =
+    58;
+
+}
+
+
+/* ============================================================
+   RESET RESULT
+   ============================================================ */
+
+function resetResult() {
+
+  const resultCard =
+    document.getElementById(
+      "resultCard"
+    );
+
+
+  if (resultCard) {
+
+    resultCard.hidden =
+      true;
+
+  }
+
 }
 
 
@@ -579,135 +1162,254 @@ function fillSample() {
 
 function main() {
 
+
   const year =
-    document.getElementById("year");
+    document.getElementById(
+      "year"
+    );
+
 
   if (year) {
+
     year.textContent =
       new Date().getFullYear();
+
   }
+
 
 
   const sampleButton =
-    document.getElementById("btnSample");
+    document.getElementById(
+      "btnSample"
+    );
+
 
   if (sampleButton) {
+
     sampleButton.addEventListener(
       "click",
-      fillSample
+      function() {
+
+        fillSample();
+
+        resetResult();
+
+      }
     );
+
   }
+
 
 
   const scoreForm =
-    document.getElementById("scoreForm");
+    document.getElementById(
+      "scoreForm"
+    );
+
 
   if (!scoreForm) {
-    console.error("scoreForm was not found.");
+
+    console.error(
+      "scoreForm was not found."
+    );
+
     return;
+
   }
 
 
+
   scoreForm.addEventListener(
+    "reset",
+    resetResult
+  );
+
+
+
+  scoreForm.addEventListener(
+
     "submit",
+
     function(e) {
+
 
       e.preventDefault();
 
+
       try {
+
 
         const scores = {
 
-          bm: valNum("bm"),
-          mib: valNum("mib"),
-          irk: valNum("irk"),
+          bm:
+            valNum("bm"),
 
-          english: valNum("english"),
-          maths: valNum("maths"),
-          science: valNum("science"),
+          mib:
+            valNum("mib"),
 
-          ss: valNum("ss"),
-          arabic: valNum("arabic"),
-          drama: valNum("drama"),
-          bat: valNum("bat")
+          irk:
+            valNum("irk"),
+
+
+          english:
+            valNum("english"),
+
+          maths:
+            valNum("maths"),
+
+          science:
+            valNum("science"),
+
+
+          ss:
+            valNum("ss"),
+
+
+          /* Arabic is optional */
+
+          arabic:
+            valOptionalNum(
+              "arabic"
+            ),
+
+
+          /* Drama is optional */
+
+          drama:
+            valOptionalNum(
+              "drama"
+            ),
+
+
+          bat:
+            valNum("bat")
+
         };
 
 
+
         const result =
-          evaluateStreaming(scores);
+          evaluateStreaming(
+            scores
+          );
+
 
 
         const resCard =
-          document.getElementById("resultCard");
+          document.getElementById(
+            "resultCard"
+          );
+
 
         const predBox =
-          document.getElementById("predLabel");
+          document.getElementById(
+            "predLabel"
+          );
+
 
         const explain =
-          document.getElementById("explainPanel");
+          document.getElementById(
+            "explainPanel"
+          );
 
 
-        resCard.hidden = false;
 
+        if (
+          !resCard ||
+          !predBox ||
+          !explain
+        ) {
 
-        if (result) {
-
-          predBox.textContent =
-            `${result.programme.name} — ${result.programme.stream}`;
-
-          predBox.style.background =
-            result.programme.colour;
-
-          predBox.style.color =
-            "#111";
+          throw new Error(
+            "One or more result elements are missing from index.html."
+          );
 
         }
 
-        else {
 
-          predBox.textContent =
-            "Manual Review Required";
 
-          predBox.style.background =
-            "#6b7280";
+        resCard.hidden =
+          false;
 
-          predBox.style.color =
-            "#fff";
-        }
+
+
+        predBox.textContent =
+          `${result.programme.name} — ${result.programme.stream}`;
+
+
+        predBox.style.background =
+          result.programme.colour;
+
+
+        predBox.style.color =
+          "#111";
+
 
 
         explain.innerHTML =
-          explanation(result);
+          explanation(
+            result
+          );
+
 
 
         const probs =
-          document.getElementById("probBars");
+          document.getElementById(
+            "probBars"
+          );
+
 
         if (probs) {
-          probs.innerHTML = "";
-          probs.style.display = "none";
+
+          probs.innerHTML =
+            "";
+
+          probs.style.display =
+            "none";
+
         }
 
 
+
         resCard.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
+
+          behavior:
+            "smooth",
+
+          block:
+            "start"
+
         });
+
 
       }
 
+
       catch(err) {
 
-        console.error(err);
 
-        alert(err.message);
+        console.error(
+          err
+        );
+
+
+        alert(
+          err.message
+        );
+
 
       }
 
     }
+
   );
+
 }
 
+
+/* ============================================================
+   START
+   ============================================================ */
 
 window.addEventListener(
   "DOMContentLoaded",
