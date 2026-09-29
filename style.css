@@ -1,6 +1,6 @@
 /* ============================================================
    YEAR 8 STREAMING PREDICTOR
-   Clean school dashboard design
+   Weighted Best-Match School Dashboard
    ============================================================ */
 
 :root {
@@ -14,8 +14,13 @@
   --ring: rgba(37, 99, 235, 0.20);
 
   --ok: #16a34a;
+  --ok-bg: #f0fdf4;
+
   --warn: #f59e0b;
+  --warn-bg: #fff7ed;
+
   --bad: #dc2626;
+  --bad-bg: #fef2f2;
 
   /* Programme colours */
   --prog1: #f58f95;
@@ -68,7 +73,9 @@ body {
    ============================================================ */
 
 .container {
+  width: 100%;
   max-width: 1100px;
+
   margin: 0 auto;
   padding: 24px;
 }
@@ -91,20 +98,23 @@ body {
 }
 
 .site-header .container {
-  padding-top: 34px;
-  padding-bottom: 32px;
+  padding-top: 36px;
+  padding-bottom: 34px;
 }
 
 h1 {
-  margin: 0 0 6px;
+  margin: 0 0 7px;
+
   font-size: 32px;
   line-height: 1.2;
   font-weight: 800;
+
   letter-spacing: -0.5px;
 }
 
 .subtitle {
   margin: 0;
+
   color: var(--muted);
   font-size: 16px;
 }
@@ -117,7 +127,9 @@ h1 {
 h2 {
   margin-top: 0;
   margin-bottom: 16px;
+
   font-size: 22px;
+  line-height: 1.3;
 }
 
 h3 {
@@ -127,20 +139,8 @@ h3 {
 .section-note {
   margin-top: -5px;
   margin-bottom: 20px;
+
   color: var(--muted);
-}
-
-.small-note {
-  margin: 14px 0 0;
-  padding: 10px 12px;
-
-  border-radius: 9px;
-
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-
-  color: #475569;
-  font-size: 14px;
 }
 
 
@@ -149,13 +149,13 @@ h3 {
    ============================================================ */
 
 .card {
+  margin: 20px 0;
+  padding: 24px;
+
   background: var(--card);
 
   border: 1px solid var(--border);
   border-radius: 16px;
-
-  padding: 24px;
-  margin: 20px 0;
 
   box-shadow:
     0 2px 5px rgba(15, 23, 42, 0.04),
@@ -168,18 +168,23 @@ h3 {
    ============================================================ */
 
 .subject-section {
-  padding: 18px;
   margin: 16px 0;
+  padding: 18px;
+
+  background: #fafbfe;
 
   border: 1px solid #e2e8f0;
   border-radius: 14px;
-
-  background: #fafbfe;
 }
 
 .subject-section h3 {
-  margin-bottom: 14px;
+  margin-bottom: 8px;
+
   font-size: 17px;
+}
+
+.subject-section .muted {
+  margin-top: 0;
 }
 
 
@@ -190,10 +195,10 @@ h3 {
 .grid {
   display: grid;
 
-  gap: 14px;
-
   grid-template-columns:
     repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
 }
 
 @media (min-width: 900px) {
@@ -205,17 +210,9 @@ h3 {
 
 }
 
-@media (max-width: 640px) {
-
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-}
-
 
 /* ============================================================
-   FORM LABELS
+   FORM LABEL
    ============================================================ */
 
 label {
@@ -231,7 +228,33 @@ label {
 
 
 /* ============================================================
-   NUMBER INPUTS
+   OPTIONAL SUBJECT LABEL
+   ============================================================ */
+
+.optional-label {
+  display: inline-block;
+
+  width: fit-content;
+
+  margin-top: -4px;
+  padding: 3px 7px;
+
+  border-radius: 999px;
+
+  background: #f1f5f9;
+
+  color: #64748b;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+
+/* ============================================================
+   INPUTS
    ============================================================ */
 
 input[type="number"] {
@@ -241,10 +264,10 @@ input[type="number"] {
 
   padding: 11px 12px;
 
-  font-size: 16px;
-
-  color: var(--text);
   background: #ffffff;
+  color: var(--text);
+
+  font-size: 16px;
 
   border: 1px solid #cbd5e1;
   border-radius: 10px;
@@ -273,6 +296,19 @@ input[type="number"]:focus {
 }
 
 
+/* Optional inputs */
+
+#arabic,
+#drama {
+  background: #fbfcfe;
+}
+
+#arabic:focus,
+#drama:focus {
+  background: #ffffff;
+}
+
+
 /* Remove number arrows */
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -283,19 +319,21 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
 /* ============================================================
-   OPTIONAL INPUTS
-
-   Arabic and Drama can be left blank.
+   NON-CORE NOTE
    ============================================================ */
 
-#arabic,
-#drama {
-  background: #fcfcfd;
-}
+.small-note {
+  margin: 15px 0 0;
+  padding: 11px 13px;
 
-#arabic:focus,
-#drama:focus {
-  background: #ffffff;
+  color: #475569;
+
+  background: #eff6ff;
+
+  border: 1px solid #bfdbfe;
+  border-radius: 9px;
+
+  font-size: 14px;
 }
 
 
@@ -316,11 +354,10 @@ input[type="number"]::-webkit-outer-spin-button {
 .btn-primary,
 .btn-outline,
 .btn-ghost {
-  padding: 11px 16px;
-
-  border-radius: 10px;
+  padding: 11px 17px;
 
   border: 1px solid transparent;
+  border-radius: 10px;
 
   cursor: pointer;
 
@@ -330,12 +367,12 @@ input[type="number"]::-webkit-outer-spin-button {
   transition:
     transform 0.12s ease,
     box-shadow 0.12s ease,
-    background 0.12s ease,
-    opacity 0.12s ease;
+    background 0.12s ease;
 }
 
 .btn-primary {
   background: var(--brand);
+
   color: #ffffff;
 
   box-shadow:
@@ -344,17 +381,15 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .btn-primary:hover {
   background: var(--brand-dark);
+
   transform: translateY(-1px);
 }
 
-.btn-primary:active {
-  transform: translateY(0);
-}
-
 .btn-outline {
+  background: #ffffff;
+
   border-color: #cbd5e1;
 
-  background: #ffffff;
   color: #1e293b;
 }
 
@@ -364,6 +399,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .btn-ghost {
   background: transparent;
+
   color: var(--muted);
 }
 
@@ -377,7 +413,7 @@ input[type="number"]::-webkit-outer-spin-button {
    ============================================================ */
 
 .result {
-  border: 2px solid #dbeafe;
+  border: 2px solid #bfdbfe;
 
   background:
     linear-gradient(
@@ -387,28 +423,36 @@ input[type="number"]::-webkit-outer-spin-button {
     );
 }
 
-.result h2 {
-  margin-bottom: 12px;
+.result > h2 {
+  margin-bottom: 6px;
+}
+
+.result-note {
+  margin-top: 0;
+  margin-bottom: 18px;
+
+  color: var(--muted);
+
+  font-size: 14px;
 }
 
 
 /* ============================================================
-   STREAM BADGE
+   RESULT BADGE
    ============================================================ */
 
 .result .badge,
 .stream-badge {
   display: inline-block;
 
-  padding: 11px 18px;
   margin-bottom: 16px;
+  padding: 11px 18px;
 
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 999px;
 
   font-size: 18px;
   font-weight: 800;
-
-  border: 1px solid rgba(0, 0, 0, 0.08);
 
   box-shadow:
     0 3px 10px rgba(15, 23, 42, 0.08);
@@ -429,30 +473,87 @@ input[type="number"]::-webkit-outer-spin-button {
    ============================================================ */
 
 .prediction-summary {
+  margin-bottom: 22px;
+  padding: 22px;
+
   text-align: center;
-
-  padding: 20px;
-  margin-bottom: 24px;
-
-  border-radius: 14px;
 
   background: #f8fafc;
 
   border: 1px solid #e2e8f0;
+  border-radius: 14px;
 }
 
 .prediction-summary h3 {
   margin-bottom: 10px;
+
+  color: var(--muted);
+
+  font-size: 15px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.6px;
 }
 
 .prediction-summary h2 {
   margin: 8px 0 4px;
 
-  font-size: 28px;
+  font-size: 29px;
 }
 
 .prediction-summary p {
   margin: 6px 0;
+}
+
+
+/* ============================================================
+   WEIGHTING INFORMATION
+   ============================================================ */
+
+.weight-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin: 16px 0 20px;
+}
+
+@media (min-width: 800px) {
+
+  .weight-grid {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+  }
+
+}
+
+.weight-card {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  padding: 14px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 11px;
+}
+
+.weight-card strong {
+  font-size: 14px;
+}
+
+.weight-card span {
+  color: var(--brand);
+
+  font-size: 18px;
+  font-weight: 800;
 }
 
 
@@ -463,38 +564,12 @@ input[type="number"]::-webkit-outer-spin-button {
 .criteria-group {
   margin: 16px 0 24px;
 
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-
   overflow: hidden;
 
   background: #ffffff;
-}
 
-.criteria-group h4 {
-  margin: 0;
-
-  padding: 12px 14px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  background: #f8fafc;
-
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.criteria-group-note {
-  padding: 9px 14px;
-
-  color: var(--muted);
-
-  font-size: 14px;
-
-  background: #fafafa;
-
-  border-bottom: 1px solid #e5e7eb;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
 }
 
 
@@ -507,15 +582,15 @@ input[type="number"]::-webkit-outer-spin-button {
 
   grid-template-columns:
     minmax(170px, 2fr)
-    minmax(80px, 1fr)
-    minmax(110px, 1fr)
-    minmax(110px, 1fr);
+    minmax(85px, 1fr)
+    minmax(120px, 1fr)
+    minmax(125px, 1fr);
 
   gap: 10px;
 
   align-items: center;
 
-  padding: 11px 14px;
+  padding: 12px 14px;
 
   border-bottom: 1px solid #eef2f7;
 }
@@ -525,11 +600,11 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .criteria-row.pass {
-  background: #f0fdf4;
+  background: var(--ok-bg);
 }
 
 .criteria-row.fail {
-  background: #fef2f2;
+  background: var(--bad-bg);
 }
 
 .criteria-subject {
@@ -537,7 +612,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .criteria-mark {
-  font-weight: 750;
+  font-weight: 800;
 }
 
 .criteria-required {
@@ -557,42 +632,64 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 
-@media (max-width: 700px) {
-
-  .criteria-row {
-    grid-template-columns:
-      1fr 1fr;
-  }
-
-}
-
-
 /* ============================================================
-   DECISION BOXES
+   DECISION / BORDERLINE BOX
    ============================================================ */
 
 .decision-message {
-  margin-top: 22px;
-
+  margin: 20px 0;
   padding: 20px;
 
   border-radius: 14px;
 }
 
 .decision-message.success {
-  background: #f0fdf4;
+  background: var(--ok-bg);
 
   border: 1px solid #bbf7d0;
 }
 
 .decision-message.warning {
-  background: #fff7ed;
+  background: var(--warn-bg);
 
   border: 1px solid #fed7aa;
 }
 
+.decision-message.warning h3 {
+  color: #9a3412;
+}
+
 .decision-message h3 {
   margin-bottom: 8px;
+}
+
+.decision-message p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* ============================================================
+   PROGRAMME MATCH COMPARISON
+   ============================================================ */
+
+.match-table {
+  min-width: 620px;
+}
+
+.match-table td:nth-child(3),
+.match-table td:nth-child(4) {
+  font-weight: 700;
+}
+
+.best-programme-row {
+  background: #eff6ff !important;
+
+  box-shadow:
+    inset 4px 0 0 var(--brand);
+}
+
+.best-programme-row td {
+  background: #eff6ff !important;
 }
 
 
@@ -625,11 +722,10 @@ input[type="number"]::-webkit-outer-spin-button {
 
   padding: 9px 14px;
 
-  border-radius: 9px;
+  background: #ffffff;
 
   border: 1px solid #d1d5db;
-
-  background: #ffffff;
+  border-radius: 9px;
 
   font-weight: 750;
 
@@ -638,10 +734,10 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .arrow {
+  color: #64748b;
+
   font-size: 22px;
   font-weight: 800;
-
-  color: #64748b;
 }
 
 
@@ -667,23 +763,13 @@ input[type="number"]::-webkit-outer-spin-button {
 
 }
 
-@media (max-width: 640px) {
-
-  .programme-list {
-    grid-template-columns: 1fr;
-  }
-
-}
-
 .programme-card {
+  min-height: 190px;
+
   padding: 18px;
 
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 14px;
-
-  border:
-    1px solid rgba(0, 0, 0, 0.08);
-
-  min-height: 190px;
 
   transition:
     transform 0.15s ease,
@@ -710,10 +796,10 @@ input[type="number"]::-webkit-outer-spin-button {
 
   padding: 5px 10px;
 
-  border-radius: 999px;
-
   background:
-    rgba(255, 255, 255, 0.70);
+    rgba(255, 255, 255, 0.7);
+
+  border-radius: 999px;
 
   font-size: 13px;
   font-weight: 800;
@@ -752,9 +838,8 @@ input[type="number"]::-webkit-outer-spin-button {
 
   overflow-x: auto;
 
-  border-radius: 12px;
-
   border: 1px solid #d1d5db;
+  border-radius: 12px;
 }
 
 .streaming-table {
@@ -772,11 +857,9 @@ input[type="number"]::-webkit-outer-spin-button {
   padding: 12px 10px;
 
   text-align: center;
-
-  border:
-    1px solid #d1d5db;
-
   vertical-align: middle;
+
+  border: 1px solid #d1d5db;
 }
 
 .streaming-table th {
@@ -784,9 +867,9 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .streaming-table tbody th {
-  text-align: left;
-
   background: #f8fafc;
+
+  text-align: left;
 }
 
 .streaming-table small {
@@ -795,13 +878,12 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-top: 5px;
 
   font-weight: 500;
-
   line-height: 1.35;
 }
 
 
 /* ============================================================
-   STREAMING TABLE HEADER COLOURS
+   STREAMING TABLE PROGRAMME HEADERS
    ============================================================ */
 
 .streaming-table .prog1 {
@@ -826,7 +908,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
 /* ============================================================
-   TABLE COLUMN TINTS
+   STREAMING TABLE COLUMN TINT
    ============================================================ */
 
 .streaming-table tbody td:nth-child(2) {
@@ -866,7 +948,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .info li {
-  margin-bottom: 8px;
+  margin-bottom: 9px;
 }
 
 .muted {
@@ -888,19 +970,46 @@ input[type="number"]::-webkit-outer-spin-button {
    ============================================================ */
 
 .site-footer {
+  padding-bottom: 18px;
+
   color: var(--muted);
 
   font-size: 14px;
 
   text-align: center;
+}
 
-  padding-bottom: 18px;
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+  .criteria-row {
+    grid-template-columns:
+      1fr 1fr;
+  }
+
 }
 
 
 /* ============================================================
    MOBILE
    ============================================================ */
+
+@media (max-width: 640px) {
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .programme-list {
+    grid-template-columns: 1fr;
+  }
+
+}
+
 
 @media (max-width: 600px) {
 
@@ -918,6 +1027,11 @@ input[type="number"]::-webkit-outer-spin-button {
 
   .prediction-summary h2 {
     font-size: 23px;
+  }
+
+  .weight-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 
   .actions {
@@ -966,6 +1080,10 @@ input[type="number"]::-webkit-outer-spin-button {
 
   .criteria-row {
     grid-template-columns: 1fr;
+  }
+
+  .weight-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
 }
