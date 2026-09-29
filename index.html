@@ -2,86 +2,948 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Year 8 Streaming Predictor using a demo Random Forest model.">
-  <title>Year 9 Streaming Predictor</title>
-  <link rel="stylesheet" href="style.css">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Year 7 and Year 8 Streaming Awareness Predictor for early awareness of possible Year 9 pathways."
+  >
+
+  <title>
+    Year 7 & 8 Streaming Awareness Predictor
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 </head>
+
 <body>
+
+  <!-- ======================================================
+       HEADER
+       ====================================================== -->
+
   <header class="site-header">
+
     <div class="container">
-      <h1>Year 9 Streaming Predictor</h1>
-      <p class="subtitle">SMPAPHMASNA for Programme 1–5 streaming.</p>
+
+      <div class="header-badge">
+        SMPAPHMASNA
+      </div>
+
+      <h1>
+        Year 7 & 8 Streaming Awareness Predictor
+      </h1>
+
+      <p class="subtitle">
+        An early indication of possible Year 9 pathways
+        based on current academic performance
+      </p>
+
+      <p class="header-note">
+        For awareness, discussion and early preparation only.
+      </p>
+
     </div>
+
   </header>
 
+
+  <!-- ======================================================
+       MAIN CONTENT
+       ====================================================== -->
+
   <main class="container">
+
+
+    <!-- ====================================================
+         INTRODUCTION
+         ==================================================== -->
+
+    <section class="card intro-card">
+
+      <div class="intro-icon">
+        🎓
+      </div>
+
+      <div>
+
+        <h2>
+          Explore Possible Future Pathways
+        </h2>
+
+        <p>
+          This predictor is designed for
+          <strong>Year 7 and Year 8 students</strong>.
+          It helps students, parents and teachers gain
+          early awareness of the Year 9 programme that
+          currently best matches the student's academic profile.
+        </p>
+
+        <p class="awareness-notice">
+          <strong>Important:</strong>
+          This is an early awareness tool and does not determine
+          the student's final streaming outcome.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ====================================================
+         INSTRUCTIONS
+         ==================================================== -->
+
     <section class="card">
-      <h2>Student Marks</h2>
-      <p class="section-note">Enter marks from 0 to 100. Arabic and Drama are optional.</p>
+
+      <h2>
+        How to Use This Predictor
+      </h2>
+
+      <div class="instruction-grid">
+
+        <div class="instruction-card">
+
+          <div class="step-number">
+            1
+          </div>
+
+          <h3>
+            Enter Current Marks
+          </h3>
+
+          <p>
+            Enter the student's latest available marks
+            for each subject.
+          </p>
+
+        </div>
+
+
+        <div class="instruction-card">
+
+          <div class="step-number">
+            2
+          </div>
+
+          <h3>
+            Predict Possible Streaming
+          </h3>
+
+          <p>
+            Select
+            <strong>Predict Possible Streaming</strong>
+            to generate an early indication.
+          </p>
+
+        </div>
+
+
+        <div class="instruction-card">
+
+          <div class="step-number">
+            3
+          </div>
+
+          <h3>
+            Review the Result
+          </h3>
+
+          <p>
+            Use the result to identify strengths,
+            areas for improvement and possible future pathways.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ====================================================
+         STUDENT MARKS FORM
+         ==================================================== -->
+
+    <section class="card">
+
+      <div class="section-heading">
+
+        <div>
+
+          <h2>
+            Student Marks
+          </h2>
+
+          <p class="section-note">
+            Enter the student's latest available marks
+            from 0 to 100.
+          </p>
+
+        </div>
+
+        <span class="year-level-badge">
+          Year 7 / Year 8
+        </span>
+
+      </div>
+
 
       <form id="scoreForm">
-        <div class="subject-section">
-          <h3>BM / MIB / IRK</h3>
-          <div class="grid">
-            <label>Bahasa Melayu<input type="number" id="bm" min="0" max="100" step="0.1" required></label>
-            <label>MIB<input type="number" id="mib" min="0" max="100" step="0.1" required></label>
-            <label>IRK<input type="number" id="irk" min="0" max="100" step="0.1" required></label>
-          </div>
-        </div>
+
+
+        <!-- ================================================
+             BM / MIB / IRK
+             ================================================ -->
 
         <div class="subject-section">
-          <h3>Core Subjects</h3>
-          <div class="grid">
-            <label>English<input type="number" id="english" min="0" max="100" step="0.1" required></label>
-            <label>Mathematics<input type="number" id="maths" min="0" max="100" step="0.1" required></label>
-            <label>Science<input type="number" id="science" min="0" max="100" step="0.1" required></label>
+
+          <div class="subject-heading">
+
+            <h3>
+              Bahasa Melayu, MIB & IRK
+            </h3>
+
+            <span class="subject-tag">
+              Required
+            </span>
+
           </div>
+
+
+          <div class="grid">
+
+            <label>
+
+              <span class="label-text">
+                Bahasa Melayu
+              </span>
+
+              <input
+                type="number"
+                id="bm"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="Enter mark"
+              >
+
+            </label>
+
+
+            <label>
+
+              <span class="label-text">
+                MIB
+              </span>
+
+              <input
+                type="number"
+                id="mib"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="Enter mark"
+              >
+
+            </label>
+
+
+            <label>
+
+              <span class="label-text">
+                IRK
+              </span>
+
+              <input
+                type="number"
+                id="irk"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="Enter mark"
+              >
+
+            </label>
+
+          </div>
+
         </div>
 
+
+        <!-- ================================================
+             CORE SUBJECTS
+             ================================================ -->
+
         <div class="subject-section">
-          <h3>Non-Core Subjects</h3>
-          <p class="muted">The predictor uses the best 3 available non-core marks. Arabic and Drama are optional.</p>
-          <div class="grid">
-            <label>Social Studies<input type="number" id="ss" min="0" max="100" step="0.1" required></label>
-            <label>Arabic <span class="optional-label">Optional</span><input type="number" id="arabic" min="0" max="100" step="0.1"></label>
-            <label>Drama <span class="optional-label">Optional</span><input type="number" id="drama" min="0" max="100" step="0.1"></label>
-            <label>BAT<input type="number" id="bat" min="0" max="100" step="0.1" required></label>
+
+          <div class="subject-heading">
+
+            <h3>
+              Core Subjects
+            </h3>
+
+            <span class="subject-tag">
+              Required
+            </span>
+
           </div>
-          <p class="small-note">At least 3 non-core marks must be available. Enter at least one of Arabic or Drama.</p>
+
+
+          <p class="muted">
+            English, Mathematics and Science are important
+            indicators when comparing possible pathways.
+          </p>
+
+
+          <div class="grid">
+
+            <label>
+
+              <span class="label-text">
+                English
+              </span>
+
+              <input
+                type="number"
+                id="english"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="Enter mark"
+              >
+
+            </label>
+
+
+            <label>
+
+              <span class="label-text">
+                Mathematics
+              </span>
+
+              <input
+                type="number"
+                id="maths"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="Enter mark"
+              >
+
+            </label>
+
+
+            <label>
+
+              <span class="label-text">
+                Science
+              </span>
+
+              <input
+                type="number"
+                id="science"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="Enter mark"
+              >
+
+            </label>
+
+          </div>
+
         </div>
+
+
+        <!-- ================================================
+             NON-CORE SUBJECTS
+             ================================================ -->
+
+        <div class="subject-section">
+
+          <div class="subject-heading">
+
+            <h3>
+              Non-Core Subjects
+            </h3>
+
+            <span class="subject-tag">
+              Best 3 Used
+            </span>
+
+          </div>
+
+
+          <p class="muted">
+
+            The predictor uses the student's
+            <strong>
+              best 3 available non-core marks
+            </strong>.
+
+            Arabic and Drama are optional.
+
+          </p>
+
+
+          <div class="grid">
+
+            <label>
+
+              <span class="label-text">
+                Social Studies
+              </span>
+
+              <input
+                type="number"
+                id="ss"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="Enter mark"
+              >
+
+            </label>
+
+
+            <label>
+
+              <span class="label-row">
+
+                <span>
+                  Arabic
+                </span>
+
+                <span class="optional-label">
+                  Optional
+                </span>
+
+              </span>
+
+              <input
+                type="number"
+                id="arabic"
+                min="0"
+                max="100"
+                step="0.1"
+                placeholder="Leave blank if not taken"
+              >
+
+            </label>
+
+
+            <label>
+
+              <span class="label-row">
+
+                <span>
+                  Drama
+                </span>
+
+                <span class="optional-label">
+                  Optional
+                </span>
+
+              </span>
+
+              <input
+                type="number"
+                id="drama"
+                min="0"
+                max="100"
+                step="0.1"
+                placeholder="Leave blank if not taken"
+              >
+
+            </label>
+
+
+            <label>
+
+              <span class="label-text">
+                BAT
+              </span>
+
+              <input
+                type="number"
+                id="bat"
+                min="0"
+                max="100"
+                step="0.1"
+                required
+                placeholder="Enter mark"
+              >
+
+            </label>
+
+          </div>
+
+
+          <div class="small-note">
+
+            <strong>
+              Non-core requirement:
+            </strong>
+
+            At least three non-core marks must be available.
+
+            Because Social Studies and BAT are required,
+            at least one mark from Arabic or Drama
+            must also be entered.
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================================
+             BUTTONS
+             ================================================ -->
 
         <div class="actions">
-          <button type="submit" class="btn-primary">Predict Streaming</button>
-          <button type="button" id="btnSample" class="btn-outline">Fill Sample</button>
-          <button type="reset" class="btn-ghost">Reset</button>
+
+          <button
+            type="submit"
+            class="btn-primary"
+          >
+            Predict Possible Streaming
+          </button>
+
+
+          <button
+            type="button"
+            id="btnSample"
+            class="btn-outline"
+          >
+            Try Sample Marks
+          </button>
+
+
+          <button
+            type="reset"
+            class="btn-ghost"
+          >
+            Clear Form
+          </button>
+
         </div>
+
       </form>
+
     </section>
 
-    <section id="resultCard" class="card result" hidden>
-      <h2>Prediction Result</h2>
-      <p class="result-note">Demo forest only. Replace model.json with your trained Random Forest before operational use.</p>
-      <div id="predLabel" class="badge"></div>
-      <div id="confidenceBox"></div>
-      <div id="explainPanel" class="explain-panel"></div>
+
+    <!-- ====================================================
+         RESULT
+         ==================================================== -->
+
+    <section
+      id="resultCard"
+      class="card result"
+      hidden
+    >
+
+      <div class="result-heading">
+
+        <div>
+
+          <span class="result-eyebrow">
+            Early Awareness Result
+          </span>
+
+          <h2>
+            Possible Future Streaming
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <p class="result-note">
+
+        This prediction reflects the student's
+        <strong>
+          current academic profile
+        </strong>.
+
+        Performance may change before the actual
+        Year 9 streaming process.
+
+      </p>
+
+
+      <div
+        id="predLabel"
+        class="badge"
+      ></div>
+
+
+      <div
+        id="confidenceBox"
+      ></div>
+
+
+      <div
+        id="explainPanel"
+        class="explain-panel"
+      ></div>
+
+
+      <div class="result-awareness">
+
+        <h3>
+          What should you do with this result?
+        </h3>
+
+        <p>
+          Use the prediction to support discussion between
+          students, parents and teachers.
+          It can help identify subjects that may need
+          additional support, intervention or enrichment
+          before final streaming.
+        </p>
+
+      </div>
+
     </section>
+
+
+    <!-- ====================================================
+         PROGRAMME REFERENCE
+         ==================================================== -->
 
     <section class="card">
-      <h2>Programme Reference</h2>
-      <div class="programme-list">
-        <article class="programme-card prog1-card"><span class="programme-number">Programme 1</span><h3>General Education Science</h3><p>Year 9 ADV · 4 Years</p></article>
-        <article class="programme-card prog2-card"><span class="programme-number">Programme 2</span><h3>General Education Science</h3><p>Year 9 O Level - Science · 5 Years</p></article>
-        <article class="programme-card prog3-card"><span class="programme-number">Programme 3</span><h3>General Education Art</h3><p>Year 9 O Level - Art · 5 Years</p></article>
-        <article class="programme-card prog4-card"><span class="programme-number">Programme 4</span><h3>Applied Programme</h3><p>Year 9 IGCSE · 5 Years</p></article>
-        <article class="programme-card prog5-card"><span class="programme-number">Programme 5</span><h3>Special Applied Programme</h3><p>Year 9 SAP · 5 Years</p></article>
+
+      <div class="section-heading">
+
+        <div>
+
+          <h2>
+            Possible Year 9 Pathways
+          </h2>
+
+          <p class="section-note">
+            The predictor compares the student's current
+            academic profile with the following pathways.
+          </p>
+
+        </div>
+
       </div>
+
+
+      <div class="programme-list">
+
+
+        <article class="programme-card prog1-card">
+
+          <span class="programme-number">
+            Programme 1
+          </span>
+
+          <h3>
+            General Education Science
+          </h3>
+
+          <p class="programme-stream">
+            Year 9 ADV
+          </p>
+
+          <p>
+            4-Year pathway
+          </p>
+
+        </article>
+
+
+        <article class="programme-card prog2-card">
+
+          <span class="programme-number">
+            Programme 2
+          </span>
+
+          <h3>
+            General Education Science
+          </h3>
+
+          <p class="programme-stream">
+            Year 9 O Level - Science
+          </p>
+
+          <p>
+            5-Year pathway
+          </p>
+
+        </article>
+
+
+        <article class="programme-card prog3-card">
+
+          <span class="programme-number">
+            Programme 3
+          </span>
+
+          <h3>
+            General Education Art
+          </h3>
+
+          <p class="programme-stream">
+            Year 9 O Level - Art
+          </p>
+
+          <p>
+            5-Year pathway
+          </p>
+
+        </article>
+
+
+        <article class="programme-card prog4-card">
+
+          <span class="programme-number">
+            Programme 4
+          </span>
+
+          <h3>
+            Applied Programme
+          </h3>
+
+          <p class="programme-stream">
+            Year 9 IGCSE
+          </p>
+
+          <p>
+            5-Year pathway
+          </p>
+
+        </article>
+
+
+        <article class="programme-card prog5-card">
+
+          <span class="programme-number">
+            Programme 5
+          </span>
+
+          <h3>
+            Special Applied Programme
+          </h3>
+
+          <p class="programme-stream">
+            Year 9 SAP
+          </p>
+
+          <p>
+            5-Year pathway
+          </p>
+
+        </article>
+
+
+      </div>
+
     </section>
+
+
+    <!-- ====================================================
+         PARENTS & TEACHERS
+         ==================================================== -->
+
+    <section class="card guidance-card">
+
+      <h2>
+        Guidance for Parents and Teachers
+      </h2>
+
+
+      <div class="guidance-grid">
+
+
+        <div class="guidance-item">
+
+          <div class="guidance-icon">
+            👨‍👩‍👧
+          </div>
+
+          <div>
+
+            <h3>
+              For Parents
+            </h3>
+
+            <p>
+              Use the result to understand the direction
+              the student's current performance may be leading.
+              Discuss strengths, areas for improvement and
+              learning support with the student and school.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="guidance-item">
+
+          <div class="guidance-icon">
+            👩‍🏫
+          </div>
+
+          <div>
+
+            <h3>
+              For Teachers
+            </h3>
+
+            <p>
+              Use the prediction as an early monitoring indicator
+              to identify students who may benefit from
+              intervention, enrichment or closer progress tracking.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="guidance-item">
+
+          <div class="guidance-icon">
+            📘
+          </div>
+
+          <div>
+
+            <h3>
+              For Year 7 Students
+            </h3>
+
+            <p>
+              The prediction provides an early indication
+              of where current academic performance may lead,
+              giving more time to strengthen weaker subjects.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="guidance-item">
+
+          <div class="guidance-icon">
+            🎯
+          </div>
+
+          <div>
+
+            <h3>
+              For Year 8 Students
+            </h3>
+
+            <p>
+              The prediction provides a more immediate indication
+              of possible Year 9 streaming and can support
+              preparation before the actual streaming process.
+            </p>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- ====================================================
+         DISCLAIMER
+         ==================================================== -->
+
+    <section class="card disclaimer-card">
+
+      <div class="disclaimer-icon">
+        ℹ️
+      </div>
+
+      <div>
+
+        <h2>
+          For Awareness Purposes Only
+        </h2>
+
+        <p>
+          This predictor provides an early indication
+          of possible future streaming based on
+          the student's current academic performance.
+        </p>
+
+        <p>
+          It does not represent a final streaming decision.
+          Actual streaming may depend on later assessment results,
+          student progress, school criteria and other
+          relevant considerations.
+        </p>
+
+      </div>
+
+    </section>
+
   </main>
 
-  <footer class="site-footer"><div class="container">Year 9 Streaming Predictor &copy; <span id="year"></span></div></footer>
+
+  <!-- ======================================================
+       FOOTER
+       ====================================================== -->
+
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <strong>
+        SMPAPHMASNA
+      </strong>
+
+      <br>
+
+      Year 7 & 8 Streaming Awareness Predictor
+
+      &copy;
+
+      <span id="year"></span>
+
+      <div class="footer-note">
+        Supporting awareness, discussion and early preparation.
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- ======================================================
+       JAVASCRIPT
+       ====================================================== -->
 
   <script src="rf.js"></script>
   <script src="app.js"></script>
+
 </body>
 </html>
