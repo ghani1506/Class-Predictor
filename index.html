@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Year 8 Streaming Predictor using a demo Random Forest model.">
+  <title>Year 8 Streaming Predictor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>Year 8 Streaming Predictor</h1>
+      <p class="subtitle">Demo Random Forest predictor for Programme 1–5 streaming.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Student Marks</h2>
+      <p class="section-note">Enter marks from 0 to 100. Arabic and Drama are optional.</p>
+
+      <form id="scoreForm">
+        <div class="subject-section">
+          <h3>BM / MIB / IRK</h3>
+          <div class="grid">
+            <label>Bahasa Melayu<input type="number" id="bm" min="0" max="100" step="0.1" required></label>
+            <label>MIB<input type="number" id="mib" min="0" max="100" step="0.1" required></label>
+            <label>IRK<input type="number" id="irk" min="0" max="100" step="0.1" required></label>
+          </div>
+        </div>
+
+        <div class="subject-section">
+          <h3>Core Subjects</h3>
+          <div class="grid">
+            <label>English<input type="number" id="english" min="0" max="100" step="0.1" required></label>
+            <label>Mathematics<input type="number" id="maths" min="0" max="100" step="0.1" required></label>
+            <label>Science<input type="number" id="science" min="0" max="100" step="0.1" required></label>
+          </div>
+        </div>
+
+        <div class="subject-section">
+          <h3>Non-Core Subjects</h3>
+          <p class="muted">The predictor uses the best 3 available non-core marks. Arabic and Drama are optional.</p>
+          <div class="grid">
+            <label>Social Studies<input type="number" id="ss" min="0" max="100" step="0.1" required></label>
+            <label>Arabic <span class="optional-label">Optional</span><input type="number" id="arabic" min="0" max="100" step="0.1"></label>
+            <label>Drama <span class="optional-label">Optional</span><input type="number" id="drama" min="0" max="100" step="0.1"></label>
+            <label>BAT<input type="number" id="bat" min="0" max="100" step="0.1" required></label>
+          </div>
+          <p class="small-note">At least 3 non-core marks must be available. Enter at least one of Arabic or Drama.</p>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn-primary">Predict Streaming</button>
+          <button type="button" id="btnSample" class="btn-outline">Fill Sample</button>
+          <button type="reset" class="btn-ghost">Reset</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="resultCard" class="card result" hidden>
+      <h2>Prediction Result</h2>
+      <p class="result-note">Demo forest only. Replace model.json with your trained Random Forest before operational use.</p>
+      <div id="predLabel" class="badge"></div>
+      <div id="confidenceBox"></div>
+      <div id="explainPanel" class="explain-panel"></div>
+    </section>
+
+    <section class="card">
+      <h2>Programme Reference</h2>
+      <div class="programme-list">
+        <article class="programme-card prog1-card"><span class="programme-number">Programme 1</span><h3>General Education Science</h3><p>Year 9 ADV · 4 Years</p></article>
+        <article class="programme-card prog2-card"><span class="programme-number">Programme 2</span><h3>General Education Science</h3><p>Year 9 O Level - Science · 5 Years</p></article>
+        <article class="programme-card prog3-card"><span class="programme-number">Programme 3</span><h3>General Education Art</h3><p>Year 9 O Level - Art · 5 Years</p></article>
+        <article class="programme-card prog4-card"><span class="programme-number">Programme 4</span><h3>Applied Programme</h3><p>Year 9 IGCSE · 5 Years</p></article>
+        <article class="programme-card prog5-card"><span class="programme-number">Programme 5</span><h3>Special Applied Programme</h3><p>Year 9 SAP · 5 Years</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container">Year 8 Streaming Predictor &copy; <span id="year"></span></div></footer>
+
+  <script src="rf.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

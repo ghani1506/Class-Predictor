@@ -1,0 +1,240 @@
+{
+  "modelType": "random_forest_demo",
+  "version": 1,
+  "note": "DEMO ONLY. Replace with your trained Random Forest export before operational use.",
+  "classes": [
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5"
+  ],
+  "features": [
+    "bm",
+    "mib",
+    "irk",
+    "english",
+    "maths",
+    "science",
+    "ss",
+    "arabic",
+    "drama",
+    "bat",
+    "bmGroupAvg",
+    "coreAvg",
+    "nonCoreAvg",
+    "weightedAvg"
+  ],
+  "trees": [
+    {
+      "feature": "weightedAvg",
+      "threshold": 19.5,
+      "left": {
+        "prediction": "P5"
+      },
+      "right": {
+        "feature": "weightedAvg",
+        "threshold": 39.5,
+        "left": {
+          "prediction": "P4"
+        },
+        "right": {
+          "feature": "weightedAvg",
+          "threshold": 49.5,
+          "left": {
+            "prediction": "P3"
+          },
+          "right": {
+            "feature": "weightedAvg",
+            "threshold": 64.5,
+            "left": {
+              "prediction": "P2"
+            },
+            "right": {
+              "prediction": "P1"
+            }
+          }
+        }
+      }
+    },
+    {
+      "feature": "coreAvg",
+      "threshold": 19.5,
+      "left": {
+        "prediction": "P5"
+      },
+      "right": {
+        "feature": "coreAvg",
+        "threshold": 39.5,
+        "left": {
+          "prediction": "P4"
+        },
+        "right": {
+          "feature": "coreAvg",
+          "threshold": 49.5,
+          "left": {
+            "prediction": "P3"
+          },
+          "right": {
+            "feature": "coreAvg",
+            "threshold": 64.5,
+            "left": {
+              "prediction": "P2"
+            },
+            "right": {
+              "prediction": "P1"
+            }
+          }
+        }
+      }
+    },
+    {
+      "feature": "bmGroupAvg",
+      "threshold": 39.5,
+      "left": {
+        "prediction": "P5"
+      },
+      "right": {
+        "feature": "bmGroupAvg",
+        "threshold": 59.5,
+        "left": {
+          "feature": "coreAvg",
+          "threshold": 39.5,
+          "left": {
+            "prediction": "P4"
+          },
+          "right": {
+            "prediction": "P3"
+          }
+        },
+        "right": {
+          "feature": "coreAvg",
+          "threshold": 64.5,
+          "left": {
+            "prediction": "P2"
+          },
+          "right": {
+            "prediction": "P1"
+          }
+        }
+      }
+    },
+    {
+      "feature": "nonCoreAvg",
+      "threshold": 19.5,
+      "left": {
+        "prediction": "P5"
+      },
+      "right": {
+        "feature": "nonCoreAvg",
+        "threshold": 49.5,
+        "left": {
+          "prediction": "P3"
+        },
+        "right": {
+          "feature": "nonCoreAvg",
+          "threshold": 59.5,
+          "left": {
+            "prediction": "P2"
+          },
+          "right": {
+            "prediction": "P1"
+          }
+        }
+      }
+    },
+    {
+      "feature": "maths",
+      "threshold": 19.5,
+      "left": {
+        "prediction": "P5"
+      },
+      "right": {
+        "feature": "maths",
+        "threshold": 39.5,
+        "left": {
+          "prediction": "P4"
+        },
+        "right": {
+          "feature": "maths",
+          "threshold": 49.5,
+          "left": {
+            "prediction": "P3"
+          },
+          "right": {
+            "feature": "maths",
+            "threshold": 64.5,
+            "left": {
+              "prediction": "P2"
+            },
+            "right": {
+              "prediction": "P1"
+            }
+          }
+        }
+      }
+    },
+    {
+      "feature": "english",
+      "threshold": 19.5,
+      "left": {
+        "prediction": "P5"
+      },
+      "right": {
+        "feature": "english",
+        "threshold": 39.5,
+        "left": {
+          "prediction": "P4"
+        },
+        "right": {
+          "feature": "english",
+          "threshold": 49.5,
+          "left": {
+            "prediction": "P3"
+          },
+          "right": {
+            "feature": "english",
+            "threshold": 64.5,
+            "left": {
+              "prediction": "P2"
+            },
+            "right": {
+              "prediction": "P1"
+            }
+          }
+        }
+      }
+    },
+    {
+      "feature": "science",
+      "threshold": 19.5,
+      "left": {
+        "prediction": "P5"
+      },
+      "right": {
+        "feature": "science",
+        "threshold": 39.5,
+        "left": {
+          "prediction": "P4"
+        },
+        "right": {
+          "feature": "science",
+          "threshold": 49.5,
+          "left": {
+            "prediction": "P3"
+          },
+          "right": {
+            "feature": "science",
+            "threshold": 64.5,
+            "left": {
+              "prediction": "P2"
+            },
+            "right": {
+              "prediction": "P1"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
