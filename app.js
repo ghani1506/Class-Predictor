@@ -1,108 +1,448 @@
-/* UI glue for the Year 8 Streaming Predictor */
-const CLASSES = ["Express","Science","General","Applied","Special Applied"];
+/* ============================================================
+   YEAR 8 STREAMING PREDICTOR
+   Based on MOE Streaming Criteria
+   ============================================================ */
 
-let RF = null;
-let MODEL = null;
+const PROGRAMMES = {
+  P4: {
+    name: "Programme 4",
+    stream: "Year 9 ADV",
+    pathway: "Year 9 ADV → Year 10 ADV",
+    duration: "4 Years",
+    colour: "#22c55e"
+  },
 
-async function loadModel(){
-  const resp = await fetch('model.json', {cache:'no-store'});
-  MODEL = await resp.json();
-  RF = new RandomForest(MODEL.trees, MODEL.classes);
-}
+  P5: {
+    name: "Programme 5",
+    stream: "5-Year Programme",
+    pathway: "Year 9 O Level / Year 9 IGCSE / Year 9 SAP",
+    duration: "5 Years",
+    colour: "#f59e0b"
+  }
+};
 
-function valNum(id){
+
+/* ============================================================
+   READ MARK
+   ============================================================ */
+
+function valNum(id) {
   const el = document.getElementById(id);
+
+  if (!el) {
+    throw new Error(`Input "${id}" was not found.`);
+  }
+
   const v = Number(el.value);
-  if (Number.isNaN(v) || v<0 || v>100) throw new Error(`Invalid score for ${id}`);
+
+  if (Number.isNaN(v) || v < 0 || v > 100) {
+    throw new Error(`Please enter a valid mark between 0 and 100 for ${id}.`);
+  }
+
   return v;
 }
 
-function coreAverages(x){
-  const avgCore = (x[0]+x[1]+x[2]+x[3])/4;
-  const avgAll  = (x.reduce((a,b)=>a+b,0))/x.length;
-  return {avgCore, avgAll};
-}
 
-function probBarRow(label, p){
-  const pct = Math.round(p*100);
-  return `
-    <div class="prob">
-      <div><strong>${label}</strong> — ${pct}%</div>
-      <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
-    </div>`;
-}
+/* ============================================================
+   MOE STREAMING CRITERIA
 
-function badgeColor(label){
-  switch(label){
-    case "Express": return "#10b981";
-    case "Science": return "#3b82f6";
-    case "General": return "#6b7280";
-    case "Applied": return "#f59e0b";
-    case "Special Applied": return "#ef4444";
-    default: return "#2563eb";
-  }
-}
+   PROGRAMME 4
 
-function explainText(x, proba, topIdx){
-  const {avgCore, avgAll} = coreAverages(x);
-  const tips = [];
-  tips.push(`Core average: <strong>${avgCore.toFixed(1)}</strong> • Overall average: <strong>${avgAll.toFixed(1)}</strong>`);
-  if (x[0] >= 85 && x[2] >= 85) tips.push("Strong Maths + Science pulled prediction upward.");
-  if (x[1] < 65) tips.push("English below 65 may push towards General/Applied in this demo.");
-  if (x[3] < 60) tips.push("Malay below 60 may push towards Applied/Special Applied in this demo.");
-  if (x[0] < 60 || x[2] < 60) tips.push("Low Maths/Science tends to reduce placement in the demo.");
-  const cls = CLASSES[topIdx];
-  return `<p>Top class: <strong>${cls}</strong>. This demo random forest aggregates 5 shallow trees focusing on core subjects (Maths, English, Science, Malay). Replace <code>model.json</code> with your trained trees for production.</p>
-  <ul>${tips.map(t=>`<li>${t}</li>`).join("")}</ul>`;
-}
+   BM, MIB, IRK       = 40% and above
+   ENG, MATH, SCI     = 20% and above
+   SS, ARAB, DRAMA,
+   BAT                 = 20% and above
 
-function fillSample(){
-  document.getElementById('maths').value = 86;
-  document.getElementById('english').value = 78;
-  document.getElementById('science').value = 88;
-  document.getElementById('malay').value = 74;
-  document.getElementById('sub5').value = 70;
-  document.getElementById('sub6').value = 65;
-  document.getElementById('sub7').value = 72;
-}
+   PROGRAMME 5
+   Students falling below the above criteria.
+   ============================================================ */
 
-async function main(){
-  document.getElementById('year').textContent = new Date().getFullYear();
-  await loadModel();
+function evaluateStreaming(scores) {
 
-  document.getElementById('btnSample').addEventListener('click', fillSample);
+  const {
+    bm,
+    mib,
+    irk,
+    english,
+    maths,
+    science,
+    ss,
+    arabic,
+    drama,
+    bat
+  } = scores;
 
-  document.getElementById('scoreForm').addEventListener('submit', (e)=>{
-    e.preventDefault();
-    try{
-      const x = [
-        valNum('maths'),
-        valNum('english'),
-        valNum('science'),
-        valNum('malay'),
-        valNum('sub5'),
-        valNum('sub6'),
-        valNum('sub7')
-      ];
-      const {label, proba, idx} = RF.predict(x);
-      const resCard = document.getElementById('resultCard');
-      const predBox = document.getElementById('predLabel');
-      const probs = document.getElementById('probBars');
-      const explain = document.getElementById('explainPanel');
 
-      resCard.hidden = false;
-      predBox.textContent = label;
-      predBox.style.background = badgeColor(label);
-      predBox.style.border = "1px solid rgba(0,0,0,.05)";
-      predBox.style.color = "#fff";
+  const criteria = [
 
-      probs.innerHTML = CLASSES.map((c,i)=>probBarRow(c, proba[i])).join("");
-      explain.innerHTML = explainText(x, proba, idx);
-      resCard.scrollIntoView({behavior:"smooth", block:"center"});
-    }catch(err){
-      alert(err.message);
+    {
+      group: "BM / MIB / IRK",
+      required: "≥ 40%",
+      passed:
+        bm >= 40 &&
+        mib >= 40 &&
+        irk >= 40,
+
+      subjects: [
+        { name: "Bahasa Melayu", mark: bm, required: 40 },
+        { name: "MIB", mark: mib, required: 40 },
+        { name: "IRK", mark: irk, required: 40 }
+      ]
+    },
+
+
+    {
+      group: "English / Mathematics / Science",
+      required: "≥ 20%",
+      passed:
+        english >= 20 &&
+        maths >= 20 &&
+        science >= 20,
+
+      subjects: [
+        { name: "English", mark: english, required: 20 },
+        { name: "Mathematics", mark: maths, required: 20 },
+        { name: "Science", mark: science, required: 20 }
+      ]
+    },
+
+
+    {
+      group: "SS / Arabic / Drama / BAT",
+      required: "≥ 20%",
+      passed:
+        ss >= 20 &&
+        arabic >= 20 &&
+        drama >= 20 &&
+        bat >= 20,
+
+      subjects: [
+        { name: "Social Studies", mark: ss, required: 20 },
+        { name: "Arabic", mark: arabic, required: 20 },
+        { name: "Drama", mark: drama, required: 20 },
+        { name: "BAT", mark: bat, required: 20 }
+      ]
     }
-  });
+
+  ];
+
+
+  const qualifiesProgramme4 =
+    criteria.every(c => c.passed);
+
+
+  return {
+    programme:
+      qualifiesProgramme4
+        ? PROGRAMMES.P4
+        : PROGRAMMES.P5,
+
+    criteria
+  };
 }
 
-window.addEventListener('DOMContentLoaded', main);
+
+/* ============================================================
+   CRITERIA DISPLAY
+   ============================================================ */
+
+function criteriaRow(subject) {
+
+  const passed = subject.mark >= subject.required;
+
+  return `
+    <div class="criteria-row ${passed ? "pass" : "fail"}">
+
+      <div class="criteria-subject">
+        ${subject.name}
+      </div>
+
+      <div class="criteria-mark">
+        ${subject.mark.toFixed(1)}%
+      </div>
+
+      <div class="criteria-required">
+        ≥ ${subject.required}%
+      </div>
+
+      <div class="criteria-status">
+        ${passed ? "✓ Meets" : "✕ Below"}
+      </div>
+
+    </div>
+  `;
+}
+
+
+/* ============================================================
+   EXPLANATION
+   ============================================================ */
+
+function explanation(result) {
+
+  const programme = result.programme;
+
+  let html = `
+
+    <div class="prediction-summary">
+
+      <h3>Recommended Streaming</h3>
+
+      <div
+        class="stream-badge"
+        style="background:${programme.colour}"
+      >
+        ${programme.stream}
+      </div>
+
+      <p>
+        <strong>${programme.name}</strong>
+        • ${programme.duration}
+      </p>
+
+      <p class="pathway">
+        ${programme.pathway}
+      </p>
+
+    </div>
+
+    <h3>MOE Criteria Check</h3>
+  `;
+
+
+  result.criteria.forEach(group => {
+
+    html += `
+
+      <div class="criteria-group">
+
+        <h4>
+          ${group.group}
+          <span>
+            ${group.passed ? "✓" : "✕"}
+          </span>
+        </h4>
+
+        ${group.subjects.map(criteriaRow).join("")}
+
+      </div>
+
+    `;
+
+  });
+
+
+  if (programme === PROGRAMMES.P4) {
+
+    html += `
+
+      <div class="decision-message success">
+
+        <strong>Programme 4 criteria achieved.</strong>
+
+        <p>
+          The student meets the minimum MOE criteria
+          for the 4-year programme.
+        </p>
+
+        <p>
+          Proposed pathway:
+          <strong>
+          Year 9 ADV → Year 10 ADV
+          </strong>
+        </p>
+
+      </div>
+    `;
+
+  } else {
+
+    html += `
+
+      <div class="decision-message warning">
+
+        <strong>Programme 5 criteria indicated.</strong>
+
+        <p>
+          One or more Programme 4 minimum criteria
+          have not been achieved.
+        </p>
+
+        <p>
+          The student should therefore be considered
+          for one of the 5-year pathways:
+        </p>
+
+        <ul>
+          <li>Year 9 O Level</li>
+          <li>Year 9 IGCSE</li>
+          <li>Year 9 SAP</li>
+        </ul>
+
+        <p>
+          Additional streaming criteria are required
+          to determine which of these three pathways
+          is most appropriate.
+        </p>
+
+      </div>
+    `;
+
+  }
+
+  return html;
+}
+
+
+/* ============================================================
+   SAMPLE DATA
+   ============================================================ */
+
+function fillSample() {
+
+  document.getElementById("bm").value = 65;
+  document.getElementById("mib").value = 62;
+  document.getElementById("irk").value = 60;
+
+  document.getElementById("english").value = 72;
+  document.getElementById("maths").value = 68;
+  document.getElementById("science").value = 70;
+
+  document.getElementById("ss").value = 65;
+  document.getElementById("arabic").value = 60;
+  document.getElementById("drama").value = 70;
+  document.getElementById("bat").value = 75;
+}
+
+
+/* ============================================================
+   MAIN
+   ============================================================ */
+
+function main() {
+
+  const year = document.getElementById("year");
+
+  if (year) {
+    year.textContent =
+      new Date().getFullYear();
+  }
+
+
+  const sampleButton =
+    document.getElementById("btnSample");
+
+  if (sampleButton) {
+    sampleButton.addEventListener(
+      "click",
+      fillSample
+    );
+  }
+
+
+  document
+    .getElementById("scoreForm")
+    .addEventListener(
+      "submit",
+      function (e) {
+
+        e.preventDefault();
+
+        try {
+
+          const scores = {
+
+            bm: valNum("bm"),
+            mib: valNum("mib"),
+            irk: valNum("irk"),
+
+            english: valNum("english"),
+            maths: valNum("maths"),
+            science: valNum("science"),
+
+            ss: valNum("ss"),
+            arabic: valNum("arabic"),
+            drama: valNum("drama"),
+            bat: valNum("bat")
+          };
+
+
+          const result =
+            evaluateStreaming(scores);
+
+
+          const resCard =
+            document.getElementById(
+              "resultCard"
+            );
+
+          const predBox =
+            document.getElementById(
+              "predLabel"
+            );
+
+          const explain =
+            document.getElementById(
+              "explainPanel"
+            );
+
+
+          resCard.hidden = false;
+
+
+          predBox.textContent =
+            result.programme.stream;
+
+
+          predBox.style.background =
+            result.programme.colour;
+
+
+          predBox.style.color = "#fff";
+
+
+          predBox.style.border =
+            "1px solid rgba(0,0,0,.05)";
+
+
+          explain.innerHTML =
+            explanation(result);
+
+
+          /*
+          Old probability bars are no longer required,
+          because this is now a criteria-based predictor.
+          */
+
+          const probs =
+            document.getElementById(
+              "probBars"
+            );
+
+          if (probs) {
+            probs.innerHTML = "";
+          }
+
+
+          resCard.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+
+        }
+
+        catch (err) {
+
+          alert(err.message);
+
+        }
+
+      }
+    );
+}
+
+
+window.addEventListener(
+  "DOMContentLoaded",
+  main
+);
