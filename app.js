@@ -1,5 +1,5 @@
 const PROGRAMMES={
-P1:{name:"Prog 1",title:"General Education Science",stream:"Year 9 ADV",duration:"4 Years",colour:"#f78b8f"},
+P1:{name:"Prog 1",title:"General Education Science",stream:"Year 9 EXP",duration:"4 Years",colour:"#f78b8f"},
 P2:{name:"Prog 2",title:"General Education Science",stream:"Year 9 O Level - Science",duration:"5 Years",colour:"#45cf59"},
 P3:{name:"Prog 3",title:"General Education Art",stream:"Year 9 O Level - Art",duration:"5 Years",colour:"#bff3bf"},
 P4:{name:"Prog 4",title:"Applied Programme",stream:"Year 9 IGCSE",duration:"5 Years",colour:"#d8b5f4"},
