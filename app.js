@@ -1,15 +1,5 @@
 "use strict";
 
-// Logic based on the supplied Year 9 channelling chart.
-// Each subject must meet its programme's criteria.
-// At least three non-core subjects must individually qualify.
-//
-// Assumptions requiring school confirmation:
-// 1. BAT is an eligible non-core subject.
-// 2. Decimal ranges use the next threshold:
-//    40–49% means >=40% and <50%.
-// 3. Mixed marks require school review.
-
 const PROGRAMMES = {
   P1: {
     name: "Prog 1",
@@ -57,22 +47,33 @@ const SUBJECTS = {
 };
 
 const CORE = [
-  "bm", "mib", "irk",
-  "english", "maths", "science"
+  "bm",
+  "mib",
+  "irk",
+  "english",
+  "maths",
+  "science"
 ];
 
 const NONCORE = ["ss", "arabic", "drama", "bat"];
 
-// Each range includes its lower bound and excludes its upper bound.
-// 101 allows marks of 100 to qualify.
-// Order: BM/MIB/IRK, English/Maths/Science, non-core.
+// Ranges include the lower bound and exclude the upper bound.
+// 101 allows a mark of 100 to qualify.
+//
+// Order:
+// 1. BM / MIB / IRK
+// 2. English / Mathematics / Science
+// 3. Non-core subjects
+//
+// Decimal interpretation:
+// 40–49% is treated as >=40% and <50%.
 
 const RULES = {
   P1: [[70, 101], [70, 101], [60, 101]],
   P2: [[60, 101], [60, 101], [50, 101]],
-  P3: [[40, 60],  [40, 50],  [20, 50]],
-  P4: [[40, 60],  [20, 40],  [20, 50]],
-  P5: [[0, 40],  [0, 20],   [0, 20]]
+  P3: [[40, 60], [40, 50], [20, 50]],
+  P4: [[40, 60], [20, 40], [20, 50]],
+  P5: [[0, 40], [0, 20], [0, 20]]
 };
 
 function validateMark(value, label) {
@@ -136,6 +137,21 @@ function rangeText(range) {
   return `${range[0]}% to below ${range[1]}%`;
 }
 
+// Distance to a programme's band in percentage points.
+// An excluded upper boundary has zero distance,
+// but it does not count as an exact qualifying mark.
+function distanceToRange(mark, range) {
+  if (mark < range[0]) {
+    return range[0] - mark;
+  }
+
+  if (mark >= range[1]) {
+    return mark - range[1];
+  }
+
+  return 0;
+}
+
 function classify(scores) {
   CORE.forEach(key => {
     validateMark(scores[key], SUBJECTS[key]);
@@ -151,49 +167,99 @@ function classify(scores) {
   }
 
   const checks = Object.entries(RULES).map(
-    ([key, ranges]) => {
+    ([key, ranges], priority) => {
       const failures = [];
+      let totalDistance = 0;
+      let unmetSubjects = 0;
 
+      // All six core subjects receive equal weight.
       CORE.forEach((subject, index) => {
+        const mark = scores[subject];
         const range = ranges[index < 3 ? 0 : 1];
 
-        if (!inRange(scores[subject], range)) {
+        totalDistance += distanceToRange(mark, range);
+
+        if (!inRange(mark, range)) {
+          unmetSubjects++;
+
           failures.push(
-            `${SUBJECTS[subject]}: ${scores[subject]}%; ` +
+            `${SUBJECTS[subject]}: ${mark}%; ` +
             `requires ${rangeText(range)}.`
           );
         }
       });
 
-      // Select any three subjects within this programme's range.
-      // A higher mark outside a bounded range is not counted.
-      const eligible = noncore.filter(subject =>
-        inRange(subject.mark, ranges[2])
-      );
+      // Select the three non-core subjects closest
+      // to this programme's band.
+      const selected = noncore
+        .map(subject => ({
+          ...subject,
+          distance: distanceToRange(
+            subject.mark,
+            ranges[2]
+          ),
+          qualifies: inRange(
+            subject.mark,
+            ranges[2]
+          )
+        }))
+        .sort((a, b) =>
+          a.distance - b.distance ||
+          Number(b.qualifies) - Number(a.qualifies) ||
+          b.mark - a.mark
+        )
+        .slice(0, 3);
 
-      if (eligible.length < 3) {
-        failures.push(
-          `Non-core: ${eligible.length} qualifying subjects; ` +
-          `requires at least 3, each ${rangeText(ranges[2])}.`
-        );
-      }
+      selected.forEach(subject => {
+        totalDistance += subject.distance;
+
+        if (!subject.qualifies) {
+          unmetSubjects++;
+
+          failures.push(
+            `${subject.name}: ${subject.mark}%; ` +
+            `requires ${rangeText(ranges[2])}.`
+          );
+        }
+      });
 
       return {
         key,
+        priority,
         failures,
-        selected: eligible.slice(0, 3)
+        selected,
+        totalDistance,
+        unmetSubjects,
+        exact: unmetSubjects === 0
       };
     }
   );
 
-  // P1 is checked before P2 because their minimum criteria overlap.
-  const match = checks.find(
-    check => check.failures.length === 0
+  // Exact matches take priority.
+  // P1 precedes P2 when both sets of criteria are met.
+  const exactMatch = checks.find(
+    check => check.exact
   );
 
+  // Otherwise choose the nearest programme.
+  // Tie-break order:
+  // 1. Smallest total distance
+  // 2. Fewest unmet subject criteria
+  // 3. Programme order P1–P5
+  const nearestMatch = [...checks].sort((a, b) =>
+    a.totalDistance - b.totalDistance ||
+    a.unmetSubjects - b.unmetSubjects ||
+    a.priority - b.priority
+  )[0];
+
+  const chosen = exactMatch || nearestMatch;
+
   return {
-    label: match?.key ?? null,
-    selected: match?.selected ?? [],
+    label: chosen.key,
+    exact: chosen.exact,
+    selected: chosen.selected,
+    totalDistance: chosen.totalDistance,
+    unmetSubjects: chosen.unmetSubjects,
     checks
   };
 }
@@ -214,72 +280,87 @@ function escapeHTML(value) {
 }
 
 function explain(result) {
-  let introduction;
+  const programme = PROGRAMMES[result.label];
 
-  if (result.label) {
-    const programme = PROGRAMMES[result.label];
+  const selectedSubjects = result.selected
+    .map(subject =>
+      `${escapeHTML(subject.name)}: ${subject.mark}%`
+    )
+    .join("<br>");
 
-    const selectedSubjects = result.selected
-      .map(subject =>
-        `${escapeHTML(subject.name)}: ${subject.mark}%`
-      )
-      .join("<br>");
+  const introduction = `
+    <h3>
+      ${result.exact
+        ? "Programme criteria met"
+        : "Nearest programme prediction"}
+    </h3>
 
-    introduction = `
-      <h3>Chart criteria met</h3>
-      <p>
-        <strong>${programme.title}</strong>
-        · ${programme.duration}
-      </p>
-      <h3>Three qualifying non-core subjects</h3>
-      <p>${selectedSubjects}</p>
-    `;
-  } else {
-    introduction = `
-      <h3>School review required</h3>
-      <p>
-        These marks do not meet all criteria in a single
-        programme column. The chart does not specify how
-        to place this combination.
-      </p>
-    `;
-  }
+    <p>
+      <strong>
+        ${programme.name} — ${programme.title}
+      </strong>
+      · ${programme.duration}
+    </p>
+
+    <p>
+      ${result.exact
+        ? "The marks meet all criteria for this programme."
+        : "This programme has the smallest total distance " +
+          "from the student's marks to the chart's ranges. " +
+          "Some criteria are not met."}
+    </p>
+
+    <h3>Three non-core subjects used</h3>
+    <p>${selectedSubjects}</p>
+  `;
 
   const note = `
     <p class="small-note">
-      Provisional interpretation: each subject must meet
-      its range, and any three eligible non-core subjects
-      must each qualify. Decimal bands use the next
-      threshold, for example 40% to below 50%.
-      BAT eligibility and these interpretations require
-      school confirmation. Final placement is decided
-      by the school.
+      Exact chart matches are used first. Otherwise,
+      the nearest programme is estimated using equal
+      weights for six core subjects and three non-core
+      subjects. Ties are resolved by fewer unmet
+      subject criteria, then programme order.
+      This nearest-match method is an added recommendation
+      rule, not a placement rule specified by the chart.
+      Final placement is decided by the school.
     </p>
   `;
 
-  const details = result.checks.map(check => {
-    const passed = check.failures.length === 0;
+  const details = result.checks
+    .map(check => {
+      const content = check.exact
+        ? "<p>All subject criteria met.</p>"
+        : `
+          <ul>
+            ${check.failures
+              .map(failure =>
+                `<li>${escapeHTML(failure)}</li>`
+              )
+              .join("")}
+          </ul>
+        `;
 
-    const content = passed
-      ? "<p>All subject criteria met.</p>"
-      : `
-        <ul>
-          ${check.failures.map(failure =>
-            `<li>${escapeHTML(failure)}</li>`
-          ).join("")}
-        </ul>
+      return `
+        <details>
+          <summary>
+            ${PROGRAMMES[check.key].name}:
+            ${check.exact
+              ? "Criteria met"
+              : "Some criteria not met"}
+          </summary>
+
+          <p>
+            Total distance:
+            ${check.totalDistance.toFixed(2)}
+            percentage points
+          </p>
+
+          ${content}
+        </details>
       `;
-
-    return `
-      <details>
-        <summary>
-          ${PROGRAMMES[check.key].name}:
-          ${passed ? "Criteria met" : "Criteria not met"}
-        </summary>
-        ${content}
-      </details>
-    `;
-  }).join("");
+    })
+    .join("");
 
   return introduction + note + details;
 }
@@ -363,20 +444,18 @@ if (typeof window !== "undefined") {
         const result = classify(scores);
         const programme = PROGRAMMES[result.label];
 
-        label.textContent = programme
-          ? `${programme.name} — ${programme.title}`
-          : "School review required";
+        label.textContent =
+          `${programme.name} — ${programme.title}`;
 
-        label.style.background =
-          programme?.colour ?? "#e5e7eb";
+        label.style.background = programme.colour;
 
         const confidenceBox =
           document.getElementById("confidenceBox");
 
         if (confidenceBox) {
-          confidenceBox.textContent =
-            "Based on the supplied criteria; " +
-            "no model confidence percentage.";
+          confidenceBox.textContent = result.exact
+            ? "Exact match to the programme criteria."
+            : "Nearest programme estimate based on subject marks.";
         }
 
         panel.innerHTML = explain(result);
@@ -394,11 +473,11 @@ if (typeof window !== "undefined") {
   });
 }
 
-// Allows the logic to be tested using Node.js.
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     classify,
     validateMark,
+    distanceToRange,
     explain
   };
 }
